@@ -1,0 +1,60 @@
+{
+    "paths": {
+        "dataset": "data/constructor_stubs.parquet",
+        "acts_cache": "data/cache/acts_layer_{layer}.pt",
+        "sae_dir": "data/saes",
+        "sae_file_template": "sae_layer_{layer}.pt",
+        "dirs": {
+            "cache": "data/cache",
+            "checkpoints": "data/checkpoints",
+            "results": "data/results",
+            "reports": "data/reports"
+        },
+        "master_report": "master_circuit_report.json"
+    },
+    "model": {
+        "name": "openai/circuit-sparsity",
+        "target_layer": 7
+    },
+    "sae_params": {
+        "expansion": 8,
+        "k": 32,
+        "harvest_n": 2000,
+        "batch_size": 256,
+        "lr": 0.0001,
+        "epochs": 50,
+        "feature_selectivity_threshold": 0.1,
+        "specificity_ratio": 1.5,
+        "target_nodes": [
+            "For",
+            "While",
+            "If",
+            "FunctionDef",
+            "AsyncFunctionDef",
+            "ClassDef",
+            "With",
+            "Try",
+            "Lambda",
+            "Return",
+            "Yield",
+            "ListComp",
+            "Assert",
+            "AnnAssign",
+            "AugAssign",
+            "BoolOp",
+            "Break",
+            "Compare",
+            "Continue",
+            "Delete",
+            "DictComp",
+            "GeneratorExp",
+            "Global",
+            "IfExp",
+            "Import",
+            "Raise",
+            "SetComp",
+            "Subscript",
+            "YieldFrom"
+        ]
+    }
+}

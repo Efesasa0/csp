@@ -1,0 +1,12 @@
+# Data artifacts (cached latents, results, plots)
+data/cache/
+data/results/
+data/sweep_results/
+data/reports/
+
+# Generated reports
+*.pdf
+
+# Python
+__pycache__/
+*.pyc

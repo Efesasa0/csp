@@ -1,0 +1,658 @@
+{
+  "dendrogram_clusters": {
+    "Cyan (control flow)": [
+      "While",
+      "Break",
+      "Continue",
+      "Try",
+      "If",
+      "For",
+      "Import"
+    ],
+    "Red (predicates)": [
+      "Compare",
+      "IfExp",
+      "Assert",
+      "BoolOp"
+    ],
+    "Yellow (definitions)": [
+      "FunctionDef",
+      "AsyncFunctionDef",
+      "AnnAssign",
+      "ClassDef",
+      "Return"
+    ],
+    "Purple (mutations/comp/yields)": [
+      "Delete",
+      "AugAssign",
+      "Global",
+      "With",
+      "Raise",
+      "ListComp",
+      "GeneratorExp",
+      "SetComp",
+      "Subscript",
+      "Lambda",
+      "DictComp",
+      "YieldFrom",
+      "Yield"
+    ]
+  },
+  "tight_pairs": [
+    {
+      "pair": [
+        "FunctionDef",
+        "AsyncFunctionDef"
+      ],
+      "cosine_distance": 0.04,
+      "mlp_feature": 2773,
+      "mlp_group": [
+        "FunctionDef",
+        "AsyncFunctionDef",
+        "Return"
+      ],
+      "resid_feature": 10347,
+      "resid_group": [
+        "FunctionDef",
+        "AsyncFunctionDef"
+      ]
+    },
+    {
+      "pair": [
+        "ListComp",
+        "GeneratorExp"
+      ],
+      "cosine_distance": 0.07,
+      "mlp_feature": 13088,
+      "mlp_group": [
+        "ClassDef",
+        "Yield",
+        "ListComp",
+        "GeneratorExp"
+      ],
+      "resid_feature": 11381,
+      "resid_group": [
+        "ListComp",
+        "GeneratorExp"
+      ]
+    },
+    {
+      "pair": [
+        "AnnAssign",
+        "ClassDef"
+      ],
+      "cosine_distance": 0.14,
+      "mlp_feature": null,
+      "mlp_group": null,
+      "resid_feature": null,
+      "resid_group": null
+    },
+    {
+      "pair": [
+        "While",
+        "Break"
+      ],
+      "cosine_distance": 0.2,
+      "mlp_feature": null,
+      "mlp_group": null,
+      "resid_feature": null,
+      "resid_group": null
+    },
+    {
+      "pair": [
+        "Compare",
+        "IfExp"
+      ],
+      "cosine_distance": 0.36,
+      "mlp_feature": null,
+      "mlp_group": null,
+      "resid_feature": null,
+      "resid_group": null
+    },
+    {
+      "pair": [
+        "If",
+        "For"
+      ],
+      "cosine_distance": 0.48,
+      "mlp_feature": null,
+      "mlp_group": null,
+      "resid_feature": null,
+      "resid_group": null
+    }
+  ],
+  "mlp_cluster_corroboration": [
+    {
+      "cluster": "Cyan (control flow)",
+      "shared_features": {
+        "5785": {
+          "within_cluster": [
+            "If",
+            "Try"
+          ],
+          "cross_cluster": []
+        }
+      }
+    },
+    {
+      "cluster": "Red (predicates)",
+      "shared_features": {}
+    },
+    {
+      "cluster": "Yellow (definitions)",
+      "shared_features": {
+        "2773": {
+          "within_cluster": [
+            "FunctionDef",
+            "AsyncFunctionDef",
+            "Return"
+          ],
+          "cross_cluster": []
+        }
+      }
+    },
+    {
+      "cluster": "Purple (mutations/comp/yields)",
+      "shared_features": {
+        "4402": {
+          "within_cluster": [
+            "Lambda",
+            "YieldFrom"
+          ],
+          "cross_cluster": [
+            "While"
+          ]
+        },
+        "13088": {
+          "within_cluster": [
+            "Yield",
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cross_cluster": [
+            "ClassDef"
+          ]
+        },
+        "9529": {
+          "within_cluster": [
+            "With",
+            "AugAssign",
+            "Delete",
+            "Global"
+          ],
+          "cross_cluster": []
+        },
+        "12271": {
+          "within_cluster": [
+            "DictComp",
+            "Raise"
+          ],
+          "cross_cluster": []
+        }
+      }
+    }
+  ],
+  "resid_cluster_corroboration": [
+    {
+      "cluster": "Cyan (control flow)",
+      "shared_features": {}
+    },
+    {
+      "cluster": "Red (predicates)",
+      "shared_features": {}
+    },
+    {
+      "cluster": "Yellow (definitions)",
+      "shared_features": {
+        "10347": {
+          "within_cluster": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cross_cluster": []
+        }
+      }
+    },
+    {
+      "cluster": "Purple (mutations/comp/yields)",
+      "shared_features": {
+        "9886": {
+          "within_cluster": [
+            "SetComp",
+            "YieldFrom"
+          ],
+          "cross_cluster": [
+            "Return"
+          ]
+        },
+        "11381": {
+          "within_cluster": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cross_cluster": []
+        },
+        "3545": {
+          "within_cluster": [
+            "DictComp",
+            "Global",
+            "Subscript"
+          ],
+          "cross_cluster": [
+            "AnnAssign"
+          ]
+        }
+      }
+    }
+  ],
+  "mlp_per_node": [
+    {
+      "node": "For",
+      "feature": 362,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "While",
+      "feature": 4402,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "If",
+      "feature": 5785,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "FunctionDef",
+      "feature": 2773,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "AsyncFunctionDef",
+      "feature": 2773,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "ClassDef",
+      "feature": 13088,
+      "classification": "Builtin-specific",
+      "surface": null,
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "With",
+      "feature": 9529,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Try",
+      "feature": 5785,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Lambda",
+      "feature": 4402,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Return",
+      "feature": 2773,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "Yield",
+      "feature": 13088,
+      "classification": "Builtin-specific",
+      "surface": "Surface-token",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "ListComp",
+      "feature": 13088,
+      "classification": "Ambiguous",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Assert",
+      "feature": 4714,
+      "classification": "Both-respond",
+      "surface": "Surface-token",
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "AnnAssign",
+      "feature": 16290,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "AugAssign",
+      "feature": 9529,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "BoolOp",
+      "feature": 6105,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "Break",
+      "feature": 2923,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Compare",
+      "feature": 1072,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "Continue",
+      "feature": 12313,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Delete",
+      "feature": 9529,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "DictComp",
+      "feature": 12271,
+      "classification": "Both-respond",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "GeneratorExp",
+      "feature": 13088,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Global",
+      "feature": 9529,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "IfExp",
+      "feature": 1557,
+      "classification": "Both-respond",
+      "surface": null,
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "Import",
+      "feature": 3070,
+      "classification": "Both-respond",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Raise",
+      "feature": 12271,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "SetComp",
+      "feature": 11979,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Subscript",
+      "feature": 3800,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "YieldFrom",
+      "feature": 4402,
+      "classification": "Builtin-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    }
+  ],
+  "resid_per_node": [
+    {
+      "node": "For",
+      "feature": 14978,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "While",
+      "feature": 79,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "If",
+      "feature": 9387,
+      "classification": "AST-specific",
+      "surface": "Surface-token",
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "FunctionDef",
+      "feature": 10347,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "AsyncFunctionDef",
+      "feature": 10347,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "ClassDef",
+      "feature": 233,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "With",
+      "feature": 19214,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Try",
+      "feature": 8881,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Lambda",
+      "feature": 79,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Return",
+      "feature": 9886,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "Yield",
+      "feature": 29887,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "ListComp",
+      "feature": 11381,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Assert",
+      "feature": 79,
+      "classification": "Both-respond",
+      "surface": "Surface-token",
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "AnnAssign",
+      "feature": 3545,
+      "classification": "Both-respond",
+      "surface": "Concept",
+      "cluster": "Yellow (definitions)"
+    },
+    {
+      "node": "AugAssign",
+      "feature": 19663,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "BoolOp",
+      "feature": 9387,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "Break",
+      "feature": 1195,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Compare",
+      "feature": 76,
+      "classification": "AST-specific",
+      "surface": "Concept",
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "Continue",
+      "feature": 2322,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Delete",
+      "feature": 21555,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "DictComp",
+      "feature": 3545,
+      "classification": "Both-respond",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "GeneratorExp",
+      "feature": 11381,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Global",
+      "feature": 3545,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "IfExp",
+      "feature": 1166,
+      "classification": "Both-respond",
+      "surface": null,
+      "cluster": "Red (predicates)"
+    },
+    {
+      "node": "Import",
+      "feature": 29887,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Cyan (control flow)"
+    },
+    {
+      "node": "Raise",
+      "feature": 14775,
+      "classification": "AST-specific",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "SetComp",
+      "feature": 9886,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "Subscript",
+      "feature": 3545,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    },
+    {
+      "node": "YieldFrom",
+      "feature": 9886,
+      "classification": "Ambiguous",
+      "surface": null,
+      "cluster": "Purple (mutations/comp/yields)"
+    }
+  ]
+}

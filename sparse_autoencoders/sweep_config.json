@@ -1,0 +1,9 @@
+{
+    "sweep_name": "selectivity_threshold_sweep",
+    "base_config": "config.json",
+    "sweep_params": {
+        "sae_params.feature_selectivity_threshold": [0.05, 0.10, 0.15, 0.20, 0.30],
+        "sae_params.specificity_ratio": [1.2, 1.5, 2.0]
+    },
+    "output_dir": "data/sweep_results"
+}

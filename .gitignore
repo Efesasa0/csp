@@ -1,0 +1,26 @@
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+
+# Large generated artifacts
+*.npy
+*.npz
+*.pt
+*.h5
+*.parquet
+!sparse_autoencoders/data/cache_constructor/metadata.parquet
+!sparse_autoencoders/data/study_v2/cache/*.parquet
+
+variance_partitioning/data/
+sparse_autoencoders/data/cache/
+sparse_autoencoders/data/checkpoints/
+sparse_autoencoders/data/results/
+sparse_autoencoders/data/saes/
+sparse_autoencoders/data/figures/
+exploration/data/
+exploration/experiments/outputs/
+exploration/results/output/
+*.log
+
+.venv/

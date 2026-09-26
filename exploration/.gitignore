@@ -1,0 +1,32 @@
+run_experiments.sh
+
+# Pipeline artifacts (download from HF instead)
+*.npy
+*.npz
+*.png
+01_contrastive_stubs_meta.json
+02_contrastive_stubs_summary.json
+04_contrastive_stubs_explicit_vs_proxy.json
+04_contrastive_stubs_pair_summary.json
+04_contrastive_stubs_significance.json
+04_contrastive_stubs_significance_masked.json
+05_contrastive_stubs_anova_results.json
+05_contrastive_stubs_cross_probe.json
+06_contrastive_stubs_ablation_summary.json
+06_contrastive_stubs_circuit_ast.json
+06_contrastive_stubs_circuit_builtin.json
+06_contrastive_stubs_circuit_interaction.json
+06_contrastive_stubs_patch_summary.json
+
+# Local data, outputs & archive (download from HF)
+*.out
+*.log
+data/
+data_more/
+images/
+archive/
+experiments/outputs/
+
+# Scratch outputs
+deneme*
+outs.out

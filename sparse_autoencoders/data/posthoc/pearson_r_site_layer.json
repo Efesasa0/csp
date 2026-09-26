@@ -1,0 +1,46 @@
+{
+  "L7_resid": {
+    "N": 13,
+    "r_abs": -0.40886502429108906,
+    "r_signed": -0.0058266835764852155,
+    "median_drop": 0.1387,
+    "mean_drop": 0.22610769230769232,
+    "nodes": [
+      "For",
+      "While",
+      "If",
+      "FunctionDef",
+      "AsyncFunctionDef",
+      "ClassDef",
+      "With",
+      "Try",
+      "Lambda",
+      "Return",
+      "Yield",
+      "ListComp",
+      "Assert"
+    ]
+  },
+  "L7_mlp": {
+    "N": 13,
+    "r_abs": -0.34989814722396106,
+    "r_signed": 0.06265105791936708,
+    "median_drop": 0.1387,
+    "mean_drop": 0.22610769230769232,
+    "nodes": [
+      "For",
+      "While",
+      "If",
+      "FunctionDef",
+      "AsyncFunctionDef",
+      "ClassDef",
+      "With",
+      "Try",
+      "Lambda",
+      "Return",
+      "Yield",
+      "ListComp",
+      "Assert"
+    ]
+  }
+}

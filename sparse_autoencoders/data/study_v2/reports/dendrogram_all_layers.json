@@ -1,0 +1,3683 @@
+{
+  "layers": {
+    "L0_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 15920,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 13549,
+            "within": [
+              "Assert",
+              "Compare",
+              "IfExp"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 7223,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 15044,
+            "within": [
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 5576,
+            "within": [
+              "With",
+              "Yield",
+              "ListComp",
+              "AugAssign",
+              "Delete",
+              "Global",
+              "Raise"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 1648,
+            "within": [
+              "GeneratorExp",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 10388,
+            "within": [
+              "Lambda",
+              "DictComp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 7223,
+          "feat_b": 7223,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 5576,
+          "feat_b": 1648,
+          "bound": false
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 15044,
+          "feat_b": 15044,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 15920,
+          "feat_b": 15920,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 13549,
+          "feat_b": 13549,
+          "bound": true
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 5667,
+          "feat_b": 7148,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 7148,
+        "While": 15920,
+        "If": 5667,
+        "FunctionDef": 7223,
+        "AsyncFunctionDef": 7223,
+        "ClassDef": 15044,
+        "With": 5576,
+        "Try": 8942,
+        "Lambda": 10388,
+        "Return": 5785,
+        "Yield": 5576,
+        "ListComp": 5576,
+        "Assert": 13549,
+        "AnnAssign": 15044,
+        "AugAssign": 5576,
+        "BoolOp": 5667,
+        "Break": 15920,
+        "Compare": 13549,
+        "Continue": 7202,
+        "Delete": 5576,
+        "DictComp": 10388,
+        "GeneratorExp": 1648,
+        "Global": 5576,
+        "IfExp": 13549,
+        "Import": 12338,
+        "Raise": 5576,
+        "SetComp": 1648,
+        "Subscript": 1648,
+        "YieldFrom": 299
+      }
+    },
+    "L1_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 12424,
+            "within": [
+              "While",
+              "Try",
+              "Break",
+              "Continue",
+              "Import"
+            ],
+            "cross": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign",
+              "Compare",
+              "IfExp"
+            ]
+          },
+          {
+            "feature": 5698,
+            "within": [
+              "For",
+              "If"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 12424,
+            "within": [
+              "Compare",
+              "IfExp"
+            ],
+            "cross": [
+              "While",
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "Try",
+              "AnnAssign",
+              "Break",
+              "Continue",
+              "Import"
+            ]
+          },
+          {
+            "feature": 12539,
+            "within": [
+              "Assert",
+              "BoolOp"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 12424,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "While",
+              "Try",
+              "Break",
+              "Compare",
+              "Continue",
+              "IfExp",
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 5964,
+            "within": [
+              "Lambda",
+              "Yield",
+              "ListComp",
+              "AugAssign",
+              "Delete",
+              "GeneratorExp",
+              "Global",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": [
+              "Return"
+            ]
+          },
+          {
+            "feature": 13434,
+            "within": [
+              "With",
+              "Raise",
+              "YieldFrom"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 12424,
+          "feat_b": 12424,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 5964,
+          "feat_b": 5964,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 12424,
+          "feat_b": 12424,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 12424,
+          "feat_b": 12424,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 12424,
+          "feat_b": 12424,
+          "bound": true
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 5698,
+          "feat_b": 5698,
+          "bound": true
+        }
+      ],
+      "top1": {
+        "For": 5698,
+        "While": 12424,
+        "If": 5698,
+        "FunctionDef": 12424,
+        "AsyncFunctionDef": 12424,
+        "ClassDef": 12424,
+        "With": 13434,
+        "Try": 12424,
+        "Lambda": 5964,
+        "Return": 5964,
+        "Yield": 5964,
+        "ListComp": 5964,
+        "Assert": 12539,
+        "AnnAssign": 12424,
+        "AugAssign": 5964,
+        "BoolOp": 12539,
+        "Break": 12424,
+        "Compare": 12424,
+        "Continue": 12424,
+        "Delete": 5964,
+        "DictComp": 11767,
+        "GeneratorExp": 5964,
+        "Global": 5964,
+        "IfExp": 12424,
+        "Import": 12424,
+        "Raise": 13434,
+        "SetComp": 5964,
+        "Subscript": 5964,
+        "YieldFrom": 13434
+      }
+    },
+    "L2_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 3394,
+            "within": [
+              "While",
+              "If",
+              "Try",
+              "Break",
+              "Continue"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 5728,
+            "within": [
+              "BoolOp",
+              "Compare"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 10892,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 4100,
+            "within": [
+              "With",
+              "Lambda",
+              "Yield",
+              "AugAssign"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 9535,
+            "within": [
+              "ListComp",
+              "GeneratorExp",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 393,
+            "within": [
+              "Delete",
+              "DictComp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 10892,
+          "feat_b": 10892,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 9535,
+          "feat_b": 9535,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 10892,
+          "feat_b": 10892,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 3394,
+          "feat_b": 3394,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 5728,
+          "feat_b": 12359,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 3394,
+          "feat_b": 13144,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 13144,
+        "While": 3394,
+        "If": 3394,
+        "FunctionDef": 10892,
+        "AsyncFunctionDef": 10892,
+        "ClassDef": 10892,
+        "With": 4100,
+        "Try": 3394,
+        "Lambda": 4100,
+        "Return": 3217,
+        "Yield": 4100,
+        "ListComp": 9535,
+        "Assert": 7658,
+        "AnnAssign": 10892,
+        "AugAssign": 4100,
+        "BoolOp": 5728,
+        "Break": 3394,
+        "Compare": 5728,
+        "Continue": 3394,
+        "Delete": 393,
+        "DictComp": 393,
+        "GeneratorExp": 9535,
+        "Global": 9453,
+        "IfExp": 12359,
+        "Import": 10892,
+        "Raise": 2064,
+        "SetComp": 9535,
+        "Subscript": 9535,
+        "YieldFrom": 12359
+      }
+    },
+    "L3_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 13996,
+            "within": [
+              "Try",
+              "Continue",
+              "Import"
+            ],
+            "cross": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign",
+              "Compare",
+              "IfExp"
+            ]
+          },
+          {
+            "feature": 1775,
+            "within": [
+              "If",
+              "Break"
+            ],
+            "cross": [
+              "BoolOp"
+            ]
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 13996,
+            "within": [
+              "Compare",
+              "IfExp"
+            ],
+            "cross": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "Try",
+              "AnnAssign",
+              "Continue",
+              "Import"
+            ]
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 13996,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "Try",
+              "Compare",
+              "Continue",
+              "IfExp",
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 6863,
+            "within": [
+              "With",
+              "Yield",
+              "ListComp",
+              "AugAssign",
+              "Delete",
+              "GeneratorExp",
+              "Global",
+              "Raise",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": [
+              "For",
+              "Return"
+            ]
+          },
+          {
+            "feature": 16106,
+            "within": [
+              "Lambda",
+              "DictComp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 13996,
+          "feat_b": 13996,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 6863,
+          "feat_b": 6863,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 13996,
+          "feat_b": 13996,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 10461,
+          "feat_b": 1775,
+          "bound": false
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 13996,
+          "feat_b": 13996,
+          "bound": true
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 1775,
+          "feat_b": 6863,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 6863,
+        "While": 10461,
+        "If": 1775,
+        "FunctionDef": 13996,
+        "AsyncFunctionDef": 13996,
+        "ClassDef": 13996,
+        "With": 6863,
+        "Try": 13996,
+        "Lambda": 16106,
+        "Return": 6863,
+        "Yield": 6863,
+        "ListComp": 6863,
+        "Assert": 13131,
+        "AnnAssign": 13996,
+        "AugAssign": 6863,
+        "BoolOp": 1775,
+        "Break": 1775,
+        "Compare": 13996,
+        "Continue": 13996,
+        "Delete": 6863,
+        "DictComp": 16106,
+        "GeneratorExp": 6863,
+        "Global": 6863,
+        "IfExp": 13996,
+        "Import": 13996,
+        "Raise": 6863,
+        "SetComp": 6863,
+        "Subscript": 6863,
+        "YieldFrom": 4028
+      }
+    },
+    "L4_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 9160,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 6712,
+            "within": [
+              "Try",
+              "Continue"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 922,
+            "within": [
+              "Assert",
+              "Compare"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 13409,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 8932,
+            "within": [
+              "Delete",
+              "Global",
+              "Raise",
+              "YieldFrom"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 2355,
+            "within": [
+              "ListComp",
+              "GeneratorExp",
+              "SetComp"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 6220,
+            "within": [
+              "Lambda",
+              "Subscript"
+            ],
+            "cross": [
+              "For"
+            ]
+          },
+          {
+            "feature": 2257,
+            "within": [
+              "Yield",
+              "DictComp"
+            ],
+            "cross": [
+              "Return"
+            ]
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 13409,
+          "feat_b": 13409,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 2355,
+          "feat_b": 2355,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 13409,
+          "feat_b": 13409,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 9160,
+          "feat_b": 9160,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 922,
+          "feat_b": 8472,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 2187,
+          "feat_b": 6220,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 6220,
+        "While": 9160,
+        "If": 2187,
+        "FunctionDef": 13409,
+        "AsyncFunctionDef": 13409,
+        "ClassDef": 13409,
+        "With": 4750,
+        "Try": 6712,
+        "Lambda": 6220,
+        "Return": 2257,
+        "Yield": 2257,
+        "ListComp": 2355,
+        "Assert": 922,
+        "AnnAssign": 13409,
+        "AugAssign": 5507,
+        "BoolOp": 1696,
+        "Break": 9160,
+        "Compare": 922,
+        "Continue": 6712,
+        "Delete": 8932,
+        "DictComp": 2257,
+        "GeneratorExp": 2355,
+        "Global": 8932,
+        "IfExp": 8472,
+        "Import": 794,
+        "Raise": 8932,
+        "SetComp": 2355,
+        "Subscript": 6220,
+        "YieldFrom": 8932
+      }
+    },
+    "L5_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 676,
+            "within": [
+              "For",
+              "If"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 12777,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 2639,
+            "within": [
+              "AugAssign",
+              "Delete",
+              "Global",
+              "Raise",
+              "SetComp"
+            ],
+            "cross": [
+              "Return"
+            ]
+          },
+          {
+            "feature": 5407,
+            "within": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 12777,
+          "feat_b": 12777,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 5407,
+          "feat_b": 5407,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 12777,
+          "feat_b": 12777,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 12125,
+          "feat_b": 8609,
+          "bound": false
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 14130,
+          "feat_b": 8383,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 676,
+          "feat_b": 676,
+          "bound": true
+        }
+      ],
+      "top1": {
+        "For": 676,
+        "While": 12125,
+        "If": 676,
+        "FunctionDef": 12777,
+        "AsyncFunctionDef": 12777,
+        "ClassDef": 12777,
+        "With": 11937,
+        "Try": 16052,
+        "Lambda": 8959,
+        "Return": 2639,
+        "Yield": 1683,
+        "ListComp": 5407,
+        "Assert": 16349,
+        "AnnAssign": 12777,
+        "AugAssign": 2639,
+        "BoolOp": 3749,
+        "Break": 8609,
+        "Compare": 14130,
+        "Continue": 8462,
+        "Delete": 2639,
+        "DictComp": 3834,
+        "GeneratorExp": 5407,
+        "Global": 2639,
+        "IfExp": 8383,
+        "Import": 8359,
+        "Raise": 2639,
+        "SetComp": 2639,
+        "Subscript": 11563,
+        "YieldFrom": 9797
+      }
+    },
+    "L6_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 6078,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 12243,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 7767,
+            "within": [
+              "DictComp",
+              "Global",
+              "SetComp"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 9117,
+            "within": [
+              "GeneratorExp",
+              "Subscript"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 12243,
+          "feat_b": 12243,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 4258,
+          "feat_b": 9117,
+          "bound": false
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 12243,
+          "feat_b": 12243,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 6078,
+          "feat_b": 6078,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 8009,
+          "feat_b": 12604,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 3786,
+          "feat_b": 11046,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 11046,
+        "While": 6078,
+        "If": 3786,
+        "FunctionDef": 12243,
+        "AsyncFunctionDef": 12243,
+        "ClassDef": 12243,
+        "With": 10092,
+        "Try": 10347,
+        "Lambda": 6626,
+        "Return": 7584,
+        "Yield": 6902,
+        "ListComp": 4258,
+        "Assert": 14615,
+        "AnnAssign": 12243,
+        "AugAssign": 9278,
+        "BoolOp": 14105,
+        "Break": 6078,
+        "Compare": 8009,
+        "Continue": 5306,
+        "Delete": 16062,
+        "DictComp": 7767,
+        "GeneratorExp": 9117,
+        "Global": 7767,
+        "IfExp": 12604,
+        "Import": 11933,
+        "Raise": 1590,
+        "SetComp": 7767,
+        "Subscript": 9117,
+        "YieldFrom": 15715
+      }
+    },
+    "L7_mlp": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 10634,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 9880,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 12386,
+            "within": [
+              "With",
+              "Yield",
+              "AugAssign"
+            ],
+            "cross": [
+              "Return"
+            ]
+          },
+          {
+            "feature": 10303,
+            "within": [
+              "Lambda",
+              "Delete"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 4714,
+            "within": [
+              "ListComp",
+              "YieldFrom"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 3070,
+            "within": [
+              "GeneratorExp",
+              "Subscript"
+            ],
+            "cross": [
+              "Assert"
+            ]
+          },
+          {
+            "feature": 6858,
+            "within": [
+              "DictComp",
+              "Raise"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 9880,
+          "feat_b": 9880,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 4714,
+          "feat_b": 3070,
+          "bound": false
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 9880,
+          "feat_b": 9880,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 10634,
+          "feat_b": 10634,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 6105,
+          "feat_b": 15221,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 3535,
+          "feat_b": 10339,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 10339,
+        "While": 10634,
+        "If": 3535,
+        "FunctionDef": 9880,
+        "AsyncFunctionDef": 9880,
+        "ClassDef": 9880,
+        "With": 12386,
+        "Try": 10915,
+        "Lambda": 10303,
+        "Return": 12386,
+        "Yield": 12386,
+        "ListComp": 4714,
+        "Assert": 3070,
+        "AnnAssign": 9880,
+        "AugAssign": 12386,
+        "BoolOp": 8286,
+        "Break": 10634,
+        "Compare": 6105,
+        "Continue": 362,
+        "Delete": 10303,
+        "DictComp": 6858,
+        "GeneratorExp": 3070,
+        "Global": 9529,
+        "IfExp": 15221,
+        "Import": 9699,
+        "Raise": 6858,
+        "SetComp": 11979,
+        "Subscript": 3070,
+        "YieldFrom": 4714
+      }
+    },
+    "L0_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 2926,
+            "within": [
+              "If",
+              "Try",
+              "Break",
+              "Continue"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 9297,
+            "within": [
+              "Assert",
+              "IfExp"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 3322,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 29994,
+            "within": [
+              "With",
+              "Lambda",
+              "Yield",
+              "ListComp",
+              "AugAssign",
+              "Delete",
+              "DictComp",
+              "GeneratorExp",
+              "Global",
+              "Raise",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": [
+              "Return"
+            ]
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 3322,
+          "feat_b": 3322,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 29994,
+          "feat_b": 29994,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 3322,
+          "feat_b": 3322,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 339,
+          "feat_b": 2926,
+          "bound": false
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 6873,
+          "feat_b": 9297,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 2926,
+          "feat_b": 17601,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 17601,
+        "While": 339,
+        "If": 2926,
+        "FunctionDef": 3322,
+        "AsyncFunctionDef": 3322,
+        "ClassDef": 3322,
+        "With": 29994,
+        "Try": 2926,
+        "Lambda": 29994,
+        "Return": 29994,
+        "Yield": 29994,
+        "ListComp": 29994,
+        "Assert": 9297,
+        "AnnAssign": 3322,
+        "AugAssign": 29994,
+        "BoolOp": 3742,
+        "Break": 2926,
+        "Compare": 6873,
+        "Continue": 2926,
+        "Delete": 29994,
+        "DictComp": 29994,
+        "GeneratorExp": 29994,
+        "Global": 29994,
+        "IfExp": 9297,
+        "Import": 3322,
+        "Raise": 29994,
+        "SetComp": 29994,
+        "Subscript": 29994,
+        "YieldFrom": 339
+      }
+    },
+    "L1_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 24174,
+            "within": [
+              "For",
+              "If"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 7502,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 94,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 8193,
+            "within": [
+              "With",
+              "ListComp",
+              "AugAssign",
+              "Delete",
+              "GeneratorExp",
+              "Raise",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": [
+              "Return"
+            ]
+          },
+          {
+            "feature": 27176,
+            "within": [
+              "Lambda",
+              "DictComp"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 11933,
+            "within": [
+              "Yield",
+              "Global"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 94,
+          "feat_b": 94,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 8193,
+          "feat_b": 8193,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 94,
+          "feat_b": 94,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 7502,
+          "feat_b": 7502,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 15022,
+          "feat_b": 364,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 24174,
+          "feat_b": 24174,
+          "bound": true
+        }
+      ],
+      "top1": {
+        "For": 24174,
+        "While": 7502,
+        "If": 24174,
+        "FunctionDef": 94,
+        "AsyncFunctionDef": 94,
+        "ClassDef": 94,
+        "With": 8193,
+        "Try": 26381,
+        "Lambda": 27176,
+        "Return": 8193,
+        "Yield": 11933,
+        "ListComp": 8193,
+        "Assert": 13795,
+        "AnnAssign": 94,
+        "AugAssign": 8193,
+        "BoolOp": 4732,
+        "Break": 7502,
+        "Compare": 15022,
+        "Continue": 364,
+        "Delete": 8193,
+        "DictComp": 27176,
+        "GeneratorExp": 8193,
+        "Global": 11933,
+        "IfExp": 364,
+        "Import": 94,
+        "Raise": 8193,
+        "SetComp": 8193,
+        "Subscript": 8193,
+        "YieldFrom": 16697
+      }
+    },
+    "L2_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 10648,
+            "within": [
+              "Break",
+              "Import"
+            ],
+            "cross": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ]
+          },
+          {
+            "feature": 3559,
+            "within": [
+              "Try",
+              "Continue"
+            ],
+            "cross": [
+              "Compare"
+            ]
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 10648,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "Break",
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 30822,
+            "within": [
+              "With",
+              "Lambda",
+              "Yield",
+              "ListComp",
+              "AugAssign",
+              "Delete",
+              "DictComp",
+              "GeneratorExp",
+              "Global",
+              "Raise",
+              "SetComp",
+              "Subscript",
+              "YieldFrom"
+            ],
+            "cross": [
+              "For",
+              "Return"
+            ]
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 10648,
+          "feat_b": 10648,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 30822,
+          "feat_b": 30822,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 10648,
+          "feat_b": 10648,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 25723,
+          "feat_b": 10648,
+          "bound": false
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 3559,
+          "feat_b": 9558,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 8511,
+          "feat_b": 30822,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 30822,
+        "While": 25723,
+        "If": 8511,
+        "FunctionDef": 10648,
+        "AsyncFunctionDef": 10648,
+        "ClassDef": 10648,
+        "With": 30822,
+        "Try": 3559,
+        "Lambda": 30822,
+        "Return": 30822,
+        "Yield": 30822,
+        "ListComp": 30822,
+        "Assert": 20138,
+        "AnnAssign": 10648,
+        "AugAssign": 30822,
+        "BoolOp": 3220,
+        "Break": 10648,
+        "Compare": 3559,
+        "Continue": 3559,
+        "Delete": 30822,
+        "DictComp": 30822,
+        "GeneratorExp": 30822,
+        "Global": 30822,
+        "IfExp": 9558,
+        "Import": 10648,
+        "Raise": 30822,
+        "SetComp": 30822,
+        "Subscript": 30822,
+        "YieldFrom": 30822
+      }
+    },
+    "L3_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 12907,
+            "within": [
+              "If",
+              "Try",
+              "Continue"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 20058,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 32471,
+            "within": [
+              "Assert",
+              "Compare",
+              "IfExp"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 26841,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 5540,
+            "within": [
+              "ClassDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 4121,
+            "within": [
+              "GeneratorExp",
+              "Global",
+              "SetComp",
+              "Subscript"
+            ],
+            "cross": [
+              "Return"
+            ]
+          },
+          {
+            "feature": 25465,
+            "within": [
+              "With",
+              "Yield",
+              "Raise"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 13156,
+            "within": [
+              "ListComp",
+              "AugAssign",
+              "Delete"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 32026,
+            "within": [
+              "Lambda",
+              "DictComp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 26841,
+          "feat_b": 26841,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 13156,
+          "feat_b": 4121,
+          "bound": false
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 5540,
+          "feat_b": 5540,
+          "bound": true
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 20058,
+          "feat_b": 20058,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 32471,
+          "feat_b": 32471,
+          "bound": true
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 12907,
+          "feat_b": 3234,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 3234,
+        "While": 20058,
+        "If": 12907,
+        "FunctionDef": 26841,
+        "AsyncFunctionDef": 26841,
+        "ClassDef": 5540,
+        "With": 25465,
+        "Try": 12907,
+        "Lambda": 32026,
+        "Return": 4121,
+        "Yield": 25465,
+        "ListComp": 13156,
+        "Assert": 32471,
+        "AnnAssign": 5540,
+        "AugAssign": 13156,
+        "BoolOp": 297,
+        "Break": 20058,
+        "Compare": 32471,
+        "Continue": 12907,
+        "Delete": 13156,
+        "DictComp": 32026,
+        "GeneratorExp": 4121,
+        "Global": 4121,
+        "IfExp": 32471,
+        "Import": 10416,
+        "Raise": 25465,
+        "SetComp": 4121,
+        "Subscript": 4121,
+        "YieldFrom": 13755
+      }
+    },
+    "L4_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 20673,
+            "within": [
+              "For",
+              "If"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 18320,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 5938,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "AnnAssign"
+            ],
+            "cross": [
+              "Import"
+            ]
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 19417,
+            "within": [
+              "With",
+              "Delete",
+              "Global"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 22350,
+            "within": [
+              "ListComp",
+              "GeneratorExp",
+              "SetComp"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 4017,
+            "within": [
+              "Lambda",
+              "Subscript"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 15529,
+            "within": [
+              "Yield",
+              "YieldFrom"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 5938,
+          "feat_b": 5938,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 22350,
+          "feat_b": 22350,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 5938,
+          "feat_b": 22280,
+          "bound": false
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 18320,
+          "feat_b": 18320,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 7402,
+          "feat_b": 5639,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 20673,
+          "feat_b": 20673,
+          "bound": true
+        }
+      ],
+      "top1": {
+        "For": 20673,
+        "While": 18320,
+        "If": 20673,
+        "FunctionDef": 5938,
+        "AsyncFunctionDef": 5938,
+        "ClassDef": 22280,
+        "With": 19417,
+        "Try": 16423,
+        "Lambda": 4017,
+        "Return": 281,
+        "Yield": 15529,
+        "ListComp": 22350,
+        "Assert": 16478,
+        "AnnAssign": 5938,
+        "AugAssign": 6353,
+        "BoolOp": 4804,
+        "Break": 18320,
+        "Compare": 7402,
+        "Continue": 23364,
+        "Delete": 19417,
+        "DictComp": 31395,
+        "GeneratorExp": 22350,
+        "Global": 19417,
+        "IfExp": 5639,
+        "Import": 5938,
+        "Raise": 15295,
+        "SetComp": 22350,
+        "Subscript": 4017,
+        "YieldFrom": 15529
+      }
+    },
+    "L5_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 4671,
+            "within": [
+              "For",
+              "If"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 5155,
+            "within": [
+              "While",
+              "Break"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [
+          {
+            "feature": 12101,
+            "within": [
+              "Assert",
+              "Compare"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 31423,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 25523,
+            "within": [
+              "Lambda",
+              "Subscript"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 27356,
+            "within": [
+              "Yield",
+              "YieldFrom"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 8702,
+            "within": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 25061,
+            "within": [
+              "Global",
+              "SetComp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 31423,
+          "feat_b": 31423,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 8702,
+          "feat_b": 8702,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 31423,
+          "feat_b": 26734,
+          "bound": false
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 5155,
+          "feat_b": 5155,
+          "bound": true
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 12101,
+          "feat_b": 5164,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 4671,
+          "feat_b": 4671,
+          "bound": true
+        }
+      ],
+      "top1": {
+        "For": 4671,
+        "While": 5155,
+        "If": 4671,
+        "FunctionDef": 31423,
+        "AsyncFunctionDef": 31423,
+        "ClassDef": 26734,
+        "With": 25021,
+        "Try": 24011,
+        "Lambda": 25523,
+        "Return": 1167,
+        "Yield": 27356,
+        "ListComp": 8702,
+        "Assert": 12101,
+        "AnnAssign": 31423,
+        "AugAssign": 12856,
+        "BoolOp": 26164,
+        "Break": 5155,
+        "Compare": 12101,
+        "Continue": 9553,
+        "Delete": 27056,
+        "DictComp": 20320,
+        "GeneratorExp": 8702,
+        "Global": 25061,
+        "IfExp": 5164,
+        "Import": 4624,
+        "Raise": 22111,
+        "SetComp": 25061,
+        "Subscript": 25523,
+        "YieldFrom": 27356
+      }
+    },
+    "L6_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [],
+        "Red (predicates)": [
+          {
+            "feature": 13808,
+            "within": [
+              "Assert",
+              "Compare"
+            ],
+            "cross": []
+          }
+        ],
+        "Yellow (definitions)": [
+          {
+            "feature": 142,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 17195,
+            "within": [
+              "Yield",
+              "YieldFrom"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 11043,
+            "within": [
+              "GeneratorExp",
+              "SetComp"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 142,
+          "feat_b": 142,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 5480,
+          "feat_b": 11043,
+          "bound": false
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 26298,
+          "feat_b": 708,
+          "bound": false
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 1861,
+          "feat_b": 1740,
+          "bound": false
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 13808,
+          "feat_b": 24866,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 10675,
+          "feat_b": 13958,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 13958,
+        "While": 1861,
+        "If": 10675,
+        "FunctionDef": 142,
+        "AsyncFunctionDef": 142,
+        "ClassDef": 708,
+        "With": 8086,
+        "Try": 6993,
+        "Lambda": 21007,
+        "Return": 7562,
+        "Yield": 17195,
+        "ListComp": 5480,
+        "Assert": 13808,
+        "AnnAssign": 26298,
+        "AugAssign": 17841,
+        "BoolOp": 11562,
+        "Break": 1740,
+        "Compare": 13808,
+        "Continue": 5606,
+        "Delete": 5358,
+        "DictComp": 9903,
+        "GeneratorExp": 11043,
+        "Global": 18865,
+        "IfExp": 24866,
+        "Import": 15462,
+        "Raise": 28005,
+        "SetComp": 11043,
+        "Subscript": 21808,
+        "YieldFrom": 17195
+      }
+    },
+    "L7_resid": {
+      "cluster_bindings": {
+        "Cyan (control flow)": [
+          {
+            "feature": 17122,
+            "within": [
+              "Try",
+              "Continue"
+            ],
+            "cross": []
+          }
+        ],
+        "Red (predicates)": [],
+        "Yellow (definitions)": [
+          {
+            "feature": 7807,
+            "within": [
+              "FunctionDef",
+              "AsyncFunctionDef",
+              "AnnAssign"
+            ],
+            "cross": []
+          }
+        ],
+        "Purple (mutations/comp/yields)": [
+          {
+            "feature": 25250,
+            "within": [
+              "ListComp",
+              "GeneratorExp",
+              "Subscript"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 29887,
+            "within": [
+              "Yield",
+              "SetComp"
+            ],
+            "cross": []
+          },
+          {
+            "feature": 29364,
+            "within": [
+              "AugAssign",
+              "Delete"
+            ],
+            "cross": []
+          }
+        ]
+      },
+      "tight_pairs": [
+        {
+          "pair": [
+            "FunctionDef",
+            "AsyncFunctionDef"
+          ],
+          "cosine_dist": 0.04,
+          "feat_a": 7807,
+          "feat_b": 7807,
+          "bound": true
+        },
+        {
+          "pair": [
+            "ListComp",
+            "GeneratorExp"
+          ],
+          "cosine_dist": 0.07,
+          "feat_a": 25250,
+          "feat_b": 25250,
+          "bound": true
+        },
+        {
+          "pair": [
+            "AnnAssign",
+            "ClassDef"
+          ],
+          "cosine_dist": 0.14,
+          "feat_a": 7807,
+          "feat_b": 233,
+          "bound": false
+        },
+        {
+          "pair": [
+            "While",
+            "Break"
+          ],
+          "cosine_dist": 0.2,
+          "feat_a": 24565,
+          "feat_b": 29783,
+          "bound": false
+        },
+        {
+          "pair": [
+            "Compare",
+            "IfExp"
+          ],
+          "cosine_dist": 0.36,
+          "feat_a": 76,
+          "feat_b": 6294,
+          "bound": false
+        },
+        {
+          "pair": [
+            "If",
+            "For"
+          ],
+          "cosine_dist": 0.48,
+          "feat_a": 7569,
+          "feat_b": 24471,
+          "bound": false
+        }
+      ],
+      "top1": {
+        "For": 24471,
+        "While": 24565,
+        "If": 7569,
+        "FunctionDef": 7807,
+        "AsyncFunctionDef": 7807,
+        "ClassDef": 233,
+        "With": 22024,
+        "Try": 17122,
+        "Lambda": 25297,
+        "Return": 22489,
+        "Yield": 29887,
+        "ListComp": 25250,
+        "Assert": 10885,
+        "AnnAssign": 7807,
+        "AugAssign": 29364,
+        "BoolOp": 9387,
+        "Break": 29783,
+        "Compare": 76,
+        "Continue": 17122,
+        "Delete": 29364,
+        "DictComp": 3817,
+        "GeneratorExp": 25250,
+        "Global": 21555,
+        "IfExp": 6294,
+        "Import": 22654,
+        "Raise": 14775,
+        "SetComp": 29887,
+        "Subscript": 25250,
+        "YieldFrom": 31080
+      }
+    }
+  },
+  "tight_pairs_by_site": {
+    "mlp": [
+      {
+        "layer": 0,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 7223,
+            "feat_b": 7223,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 5576,
+            "feat_b": 1648,
+            "bound": false
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 15044,
+            "feat_b": 15044,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 15920,
+            "feat_b": 15920,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 13549,
+            "feat_b": 13549,
+            "bound": true
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 5667,
+            "feat_b": 7148,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 1,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 12424,
+            "feat_b": 12424,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 5964,
+            "feat_b": 5964,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 12424,
+            "feat_b": 12424,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 12424,
+            "feat_b": 12424,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 12424,
+            "feat_b": 12424,
+            "bound": true
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 5698,
+            "feat_b": 5698,
+            "bound": true
+          }
+        ]
+      },
+      {
+        "layer": 2,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 10892,
+            "feat_b": 10892,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 9535,
+            "feat_b": 9535,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 10892,
+            "feat_b": 10892,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 3394,
+            "feat_b": 3394,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 5728,
+            "feat_b": 12359,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 3394,
+            "feat_b": 13144,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 3,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 13996,
+            "feat_b": 13996,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 6863,
+            "feat_b": 6863,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 13996,
+            "feat_b": 13996,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 10461,
+            "feat_b": 1775,
+            "bound": false
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 13996,
+            "feat_b": 13996,
+            "bound": true
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 1775,
+            "feat_b": 6863,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 4,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 13409,
+            "feat_b": 13409,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 2355,
+            "feat_b": 2355,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 13409,
+            "feat_b": 13409,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 9160,
+            "feat_b": 9160,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 922,
+            "feat_b": 8472,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 2187,
+            "feat_b": 6220,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 5,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 12777,
+            "feat_b": 12777,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 5407,
+            "feat_b": 5407,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 12777,
+            "feat_b": 12777,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 12125,
+            "feat_b": 8609,
+            "bound": false
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 14130,
+            "feat_b": 8383,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 676,
+            "feat_b": 676,
+            "bound": true
+          }
+        ]
+      },
+      {
+        "layer": 6,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 12243,
+            "feat_b": 12243,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 4258,
+            "feat_b": 9117,
+            "bound": false
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 12243,
+            "feat_b": 12243,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 6078,
+            "feat_b": 6078,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 8009,
+            "feat_b": 12604,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 3786,
+            "feat_b": 11046,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 7,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 9880,
+            "feat_b": 9880,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 4714,
+            "feat_b": 3070,
+            "bound": false
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 9880,
+            "feat_b": 9880,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 10634,
+            "feat_b": 10634,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 6105,
+            "feat_b": 15221,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 3535,
+            "feat_b": 10339,
+            "bound": false
+          }
+        ]
+      }
+    ],
+    "resid": [
+      {
+        "layer": 0,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 3322,
+            "feat_b": 3322,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 29994,
+            "feat_b": 29994,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 3322,
+            "feat_b": 3322,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 339,
+            "feat_b": 2926,
+            "bound": false
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 6873,
+            "feat_b": 9297,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 2926,
+            "feat_b": 17601,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 1,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 94,
+            "feat_b": 94,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 8193,
+            "feat_b": 8193,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 94,
+            "feat_b": 94,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 7502,
+            "feat_b": 7502,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 15022,
+            "feat_b": 364,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 24174,
+            "feat_b": 24174,
+            "bound": true
+          }
+        ]
+      },
+      {
+        "layer": 2,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 10648,
+            "feat_b": 10648,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 30822,
+            "feat_b": 30822,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 10648,
+            "feat_b": 10648,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 25723,
+            "feat_b": 10648,
+            "bound": false
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 3559,
+            "feat_b": 9558,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 8511,
+            "feat_b": 30822,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 3,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 26841,
+            "feat_b": 26841,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 13156,
+            "feat_b": 4121,
+            "bound": false
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 5540,
+            "feat_b": 5540,
+            "bound": true
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 20058,
+            "feat_b": 20058,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 32471,
+            "feat_b": 32471,
+            "bound": true
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 12907,
+            "feat_b": 3234,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 4,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 5938,
+            "feat_b": 5938,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 22350,
+            "feat_b": 22350,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 5938,
+            "feat_b": 22280,
+            "bound": false
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 18320,
+            "feat_b": 18320,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 7402,
+            "feat_b": 5639,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 20673,
+            "feat_b": 20673,
+            "bound": true
+          }
+        ]
+      },
+      {
+        "layer": 5,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 31423,
+            "feat_b": 31423,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 8702,
+            "feat_b": 8702,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 31423,
+            "feat_b": 26734,
+            "bound": false
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 5155,
+            "feat_b": 5155,
+            "bound": true
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 12101,
+            "feat_b": 5164,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 4671,
+            "feat_b": 4671,
+            "bound": true
+          }
+        ]
+      },
+      {
+        "layer": 6,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 142,
+            "feat_b": 142,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 5480,
+            "feat_b": 11043,
+            "bound": false
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 26298,
+            "feat_b": 708,
+            "bound": false
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 1861,
+            "feat_b": 1740,
+            "bound": false
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 13808,
+            "feat_b": 24866,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 10675,
+            "feat_b": 13958,
+            "bound": false
+          }
+        ]
+      },
+      {
+        "layer": 7,
+        "pairs": [
+          {
+            "pair": [
+              "FunctionDef",
+              "AsyncFunctionDef"
+            ],
+            "cosine_dist": 0.04,
+            "feat_a": 7807,
+            "feat_b": 7807,
+            "bound": true
+          },
+          {
+            "pair": [
+              "ListComp",
+              "GeneratorExp"
+            ],
+            "cosine_dist": 0.07,
+            "feat_a": 25250,
+            "feat_b": 25250,
+            "bound": true
+          },
+          {
+            "pair": [
+              "AnnAssign",
+              "ClassDef"
+            ],
+            "cosine_dist": 0.14,
+            "feat_a": 7807,
+            "feat_b": 233,
+            "bound": false
+          },
+          {
+            "pair": [
+              "While",
+              "Break"
+            ],
+            "cosine_dist": 0.2,
+            "feat_a": 24565,
+            "feat_b": 29783,
+            "bound": false
+          },
+          {
+            "pair": [
+              "Compare",
+              "IfExp"
+            ],
+            "cosine_dist": 0.36,
+            "feat_a": 76,
+            "feat_b": 6294,
+            "bound": false
+          },
+          {
+            "pair": [
+              "If",
+              "For"
+            ],
+            "cosine_dist": 0.48,
+            "feat_a": 7569,
+            "feat_b": 24471,
+            "bound": false
+          }
+        ]
+      }
+    ]
+  }
+}

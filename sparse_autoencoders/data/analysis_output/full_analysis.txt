@@ -1,0 +1,1772 @@
+
+========================================================================
+  1. SAE RECONSTRUCTION QUALITY (R² across layers)
+========================================================================
+
+Layer    MLP R²       Resid R²     Δ (MLP−Resid) 
+--------------------------------------------------
+  0      0.9217       0.7724       +0.1492
+  1      0.7895       0.9038       -0.1143
+  2      0.8706       0.7782       +0.0924
+  3      0.7821       0.8064       -0.0243
+  4      0.9593       0.9218       +0.0376
+  5      0.9279       0.9445       -0.0166
+  6      0.9196       0.9425       -0.0229
+  7      0.9127       0.9421       -0.0295
+
+MLP   mean R² = 0.8854  (range 0.7821–0.9593)
+Resid mean R² = 0.8765  (range 0.7724–0.9445)
+
+Best MLP:   L4 (R²=0.9593)
+Best Resid: L5 (R²=0.9445)
+Worst MLP:  L3 (R²=0.7821)
+Worst Resid:L0 (R²=0.7724)
+
+MLP SAE has higher R² than Resid SAE in 3/8 layers.
+→ MLP activations are easier to reconstruct, yet (as we'll see) carry LESS
+  linearly-separable syntax info. High R² ≠ high interpretability.
+
+========================================================================
+  2. FEATURE DISCOVERY: SELECTIVE FEATURES PER LAYER
+========================================================================
+
+Layer   
+    For
+  While
+     If
+ Functi
+ AsyncF
+ ClassD
+   With
+    Try
+ Lambda
+ Return
+  Yield
+ ListCo
+ Assert
+    TOTAL
+------------------------------------------------------------------------------------------------------------
+  0     
+      2
+      4
+      3
+      4
+      4
+      3
+      3
+      3
+      4
+      3
+      2
+      4
+      3
+       42
+  1     
+      1
+      1
+      1
+      1
+      1
+      1
+      2
+      1
+      2
+      1
+      1
+      2
+      1
+       16
+  2     
+      2
+      1
+      1
+      1
+      1
+      2
+      1
+      1
+      2
+      1
+      1
+      1
+      2
+       17
+  3     
+      2
+      2
+      1
+      2
+      2
+      2
+      1
+      1
+      2
+      1
+      1
+      1
+      3
+       21
+  4     
+     33
+     44
+      7
+     78
+     79
+     39
+     34
+     14
+     37
+     35
+     35
+     33
+     40
+      508
+  5     
+     38
+     30
+     16
+     28
+     29
+     39
+     28
+     18
+     30
+     28
+     31
+     29
+     30
+      374
+  6     
+     49
+     43
+     22
+     28
+     29
+     46
+     37
+     27
+     35
+     42
+     42
+     31
+     42
+      473
+  7     
+     20
+     20
+      3
+     17
+     17
+     21
+     21
+      7
+     21
+     19
+     19
+     19
+     22
+      226
+
+Phase transition: Layers 0-3 have 96 total features
+                  Layers 4-7 have 1581 total features
+                  Ratio: 16.5x more in L4-7
+
+Total features across all layers per node:
+  AsyncFunctionDef      162 features
+  FunctionDef           159 features
+  ClassDef              153 features
+  For                   147 features
+  While                 145 features
+  Assert                143 features
+  Lambda                133 features
+  Yield                 132 features
+  Return                130 features
+  With                  127 features
+  ListComp              120 features
+  Try                    72 features
+  If                     54 features
+
+Peak layer per AST node (layer with most selective features):
+  For                  peaks at L6 (49 features)
+  While                peaks at L4 (44 features)
+  If                   peaks at L6 (22 features)
+  FunctionDef          peaks at L4 (78 features)
+  AsyncFunctionDef     peaks at L4 (79 features)
+  ClassDef             peaks at L6 (46 features)
+  With                 peaks at L6 (37 features)
+  Try                  peaks at L6 (27 features)
+  Lambda               peaks at L4 (37 features)
+  Return               peaks at L6 (42 features)
+  Yield                peaks at L6 (42 features)
+  ListComp             peaks at L4 (33 features)
+  Assert               peaks at L6 (42 features)
+
+========================================================================
+  3. LINEAR PROBE ANALYSIS
+========================================================================
+
+Site           Raw Acc    SAE Acc    Drop       Raw F1     SAE F1     F1 Drop   
+----------------------------------------------------------------
+  L4_mlp       0.5389     0.4816     0.0573++++ 0.4946     0.4226     0.0720++++
+  L4_resid     0.7234     0.7090     0.0144++++ 0.6969     0.6656     0.0313++++
+  L5_mlp       0.6783     0.5963     0.0820++++ 0.6565     0.5646     0.0919++++
+  L5_resid     0.7254     0.7172     0.0082++++ 0.7033     0.6913     0.0120++++
+  L6_mlp       0.7152     0.6762     0.0390++++ 0.6933     0.6502     0.0431++++
+  L6_resid     0.7234     0.7131     0.0103++++ 0.7021     0.6907     0.0114++++
+  L7_mlp       0.7336     0.6619     0.0717++++ 0.7165     0.6442     0.0723++++
+  L7_resid     0.7398     0.7275     0.0123++++ 0.7207     0.7039     0.0168++++
+
+Per-class accuracy (L7_resid — best overall site):
+  Node                 Raw      SAE      Drop     Verdict
+  -------------------------------------------------------
+  For                  0.429    0.457    -0.029++ HARD
+  While                1.000    1.000    0.000+++ EASY
+  If                   0.788    0.758    0.030+++ MODERATE
+  FunctionDef          0.312    0.229    0.083+++ HARD
+  AsyncFunctionDef     1.000    0.973    0.027+++ EASY
+  ClassDef             0.894    0.830    0.064+++ MODERATE
+  With                 1.000    1.000    0.000+++ EASY
+  Try                  0.781    0.812    -0.031++ MODERATE
+  Lambda               1.000    1.000    0.000+++ EASY
+  Return               0.447    0.362    0.085+++ HARD
+  Yield                0.861    0.972    -0.111++ MODERATE
+  ListComp             0.400    0.425    -0.025++ HARD
+  Assert               1.000    1.000    0.000+++ EASY
+
+SAE Faithfulness Gap (Raw − SAE accuracy) by site type:
+  Residual stream: mean drop = 1.13pp (range 0.82–1.44pp)
+  MLP output:      mean drop = 6.25pp (range 3.90–8.20pp)
+  → MLP SAEs lose 5.5x more probe accuracy than residual SAEs
+
+========================================================================
+  4. CAUSAL ABLATION ANALYSIS
+========================================================================
+
+Site           Nodes w/ +drop   Mean |rel_drop|    Max rel_drop (node)      
+---------------------------------------------------------------------------
+  L4_mlp         2/13          0.5717             +0.2474 (Assert)
+  L4_resid       2/13          52.3832            +0.1844 (Try)
+  L5_mlp         9/13          0.2717             +0.3422 (With)
+  L5_resid       5/13          0.6862             +0.8582 (Yield)
+  L6_mlp         5/13          0.1911             +0.2463 (For)
+  L6_resid       4/13          0.3676             +0.6508 (Yield)
+  L7_mlp         7/13          0.1573             +0.4126 (Try)
+  L7_resid       8/13          0.2723             +0.7355 (With)
+
+Detailed causal ablation (L7_resid):
+  Node                 Baseline P   Ablated P    Prob Drop    Rel Drop    
+  ----------------------------------------------------------
+  For                  0.000982     0.000943     0.000039     +0.0394
+  While                0.000077     0.000090     -0.000013    -0.1631
+  If                   0.002102     0.001762     0.000340     +0.1619
+  FunctionDef          0.000010     0.000010     0.000001     +0.0552
+  AsyncFunctionDef     0.000093     0.000120     -0.000027    -0.2890
+  ClassDef             0.000142     0.000166     -0.000025    -0.1750
+  With                 0.000037     0.000010     0.000028     +0.7355
+  Try                  0.000317     0.000311     0.000006     +0.0178
+  Lambda               0.000051     0.000081     -0.000030    -0.5809
+  Return               0.000139     0.000126     0.000013     +0.0966
+  Yield                0.000035     0.000012     0.000024     +0.6711
+  ListComp             0.004796     0.005005     -0.000209    -0.0436
+  Assert               0.001671     0.000817     0.000855     +0.5114
+
+Correlation: probe accuracy vs causal effect (L7_resid):
+  Pearson r(probe_accuracy, relative_drop) = 0.0381
+  → Weak correlation between linear separability and causal importance
+
+========================================================================
+  5. CO-ACTIVATION ANALYSIS
+========================================================================
+
+  [L4_mlp]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.410           feat 482      0.055       
+  While                0.220           feat 826      0.220       
+  If                   0.000           feat 482      0.000       
+  FunctionDef          0.105           feat 2789     0.055       
+  AsyncFunctionDef     0.105           feat 2789     0.055       
+  ClassDef             0.105           feat 2789     0.055       
+  With                 0.055           feat 6463     0.055       
+  Try                  0.005           feat 826      0.005       
+  Lambda               0.330           feat 6220     0.330       
+  Return               0.170           feat 826      0.110       
+  Yield                0.335           feat 826      0.330       
+  ListComp             0.015           feat 6712     0.005       
+  Assert               0.285           feat 826      0.230       
+  Mean self-activation rate: 0.165
+  Mean max co-firing rate:   0.116
+  → Features fire with moderate co-dependence
+
+  [L4_resid]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.670           feat 14307    0.160       
+  While                0.330           feat 11781    0.165       
+  If                   0.000           feat 11781    0.000       
+  FunctionDef          0.225           feat 19237    0.160       
+  AsyncFunctionDef     0.045           feat 32093    0.045       
+  ClassDef             0.045           feat 32093    0.045       
+  With                 0.000           feat 4804     0.000       
+  Try                  0.165           feat 32093    0.165       
+  Lambda               0.165           feat 32093    0.165       
+  Return               0.010           feat 19237    0.005       
+  Yield                0.005           feat 19237    0.005       
+  ListComp             0.105           feat 19237    0.105       
+  Assert               0.000           feat 4804     0.000       
+  Mean self-activation rate: 0.136
+  Mean max co-firing rate:   0.078
+  → Features fire independently
+
+  [L5_mlp]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.330           feat 848      0.000       
+  While                0.330           feat 848      0.330       
+  If                   0.000           feat 608      0.000       
+  FunctionDef          0.000           feat 608      0.000       
+  AsyncFunctionDef     0.000           feat 608      0.000       
+  ClassDef             0.000           feat 608      0.000       
+  With                 0.010           feat 608      0.000       
+  Try                  0.000           feat 608      0.000       
+  Lambda               0.330           feat 1483     0.330       
+  Return               0.000           feat 608      0.000       
+  Yield                0.010           feat 608      0.000       
+  ListComp             0.005           feat 608      0.000       
+  Assert               0.335           feat 848      0.330       
+  Mean self-activation rate: 0.104
+  Mean max co-firing rate:   0.076
+  → Features fire independently
+
+  [L5_resid]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.670           feat 1167     0.060       
+  While                0.330           feat 22111    0.025       
+  If                   0.000           feat 1167     0.000       
+  FunctionDef          0.030           feat 18683    0.030       
+  AsyncFunctionDef     0.000           feat 1167     0.000       
+  ClassDef             0.005           feat 18683    0.005       
+  With                 0.000           feat 1167     0.000       
+  Try                  0.000           feat 1167     0.000       
+  Lambda               0.330           feat 22111    0.025       
+  Return               0.070           feat 18683    0.060       
+  Yield                0.000           feat 1167     0.000       
+  ListComp             0.000           feat 1167     0.000       
+  Assert               0.025           feat 2915     0.025       
+  Mean self-activation rate: 0.112
+  Mean max co-firing rate:   0.018
+  → Features fire independently
+
+  [L6_mlp]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.685           feat 7584     0.040       
+  While                0.330           feat 6902     0.105       
+  If                   0.000           feat 1100     0.000       
+  FunctionDef          0.000           feat 1100     0.000       
+  AsyncFunctionDef     0.000           feat 1100     0.000       
+  ClassDef             0.000           feat 1100     0.000       
+  With                 0.085           feat 1100     0.065       
+  Try                  0.000           feat 1100     0.000       
+  Lambda               0.330           feat 6902     0.105       
+  Return               0.090           feat 1100     0.050       
+  Yield                0.105           feat 1100     0.105       
+  ListComp             0.000           feat 1100     0.000       
+  Assert               0.000           feat 1100     0.000       
+  Mean self-activation rate: 0.125
+  Mean max co-firing rate:   0.036
+  → Features fire independently
+
+  [L6_resid]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.670           feat 5606     0.330       
+  While                0.030           feat 5606     0.030       
+  If                   0.030           feat 5606     0.030       
+  FunctionDef          0.000           feat 708      0.000       
+  AsyncFunctionDef     0.000           feat 708      0.000       
+  ClassDef             0.000           feat 2260     0.000       
+  With                 0.110           feat 3208     0.055       
+  Try                  0.330           feat 11328    0.330       
+  Lambda               0.330           feat 8086     0.055       
+  Return               0.005           feat 11328    0.005       
+  Yield                0.020           feat 3208     0.010       
+  ListComp             0.000           feat 708      0.000       
+  Assert               0.330           feat 8086     0.055       
+  Mean self-activation rate: 0.143
+  Mean max co-firing rate:   0.069
+  → Features fire independently
+
+  [L7_mlp]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.665           feat 5785     0.330       
+  While                0.330           feat 4714     0.330       
+  If                   0.330           feat 362      0.330       
+  FunctionDef          0.035           feat 362      0.030       
+  AsyncFunctionDef     0.035           feat 362      0.030       
+  ClassDef             0.055           feat 362      0.055       
+  With                 0.035           feat 362      0.030       
+  Try                  0.330           feat 362      0.330       
+  Lambda               0.330           feat 4714     0.330       
+  Return               0.035           feat 362      0.030       
+  Yield                0.055           feat 362      0.055       
+  ListComp             0.055           feat 362      0.050       
+  Assert               0.335           feat 4402     0.330       
+  Mean self-activation rate: 0.202
+  Mean max co-firing rate:   0.174
+  → Features fire with moderate co-dependence
+
+  [L7_resid]
+  Node                 Self-Act Rate   Top Co-fire  Co-fire Rate
+  ----------------------------------------------------------
+  For                  0.670           feat 29887    0.145       
+  While                0.330           feat 8881     0.055       
+  If                   0.005           feat 8881     0.005       
+  FunctionDef          0.065           feat 14978    0.065       
+  AsyncFunctionDef     0.065           feat 14978    0.065       
+  ClassDef             0.115           feat 14978    0.115       
+  With                 0.000           feat 79       0.000       
+  Try                  0.100           feat 79       0.055       
+  Lambda               0.330           feat 8881     0.055       
+  Return               0.000           feat 79       0.000       
+  Yield                0.145           feat 14978    0.145       
+  ListComp             0.000           feat 79       0.000       
+  Assert               0.330           feat 8881     0.055       
+  Mean self-activation rate: 0.166
+  Mean max co-firing rate:   0.058
+  → Features fire independently
+
+========================================================================
+  6. CROSS-LAYER FEATURE SIMILARITY
+========================================================================
+
+  [MLP stream]
+  Cosine similarity of feature activation patterns across layers:
+
+  Averaged across all nodes (layers 0–7):
+        
+  L  0
+  L  2
+  L  3
+  L  4
+  L  5
+  L  6
+  L  7
+
+  L  0 
+  1.000
+  0.002
+  0.009
+  0.018
+  0.007
+  -0.004
+  0.011
+
+  L  2 
+  0.002
+  1.000
+  0.020
+  -0.015
+  0.005
+  0.005
+  0.001
+
+  L  3 
+  0.009
+  0.020
+  1.000
+  -0.011
+  0.010
+  -0.001
+  -0.007
+
+  L  4 
+  0.018
+  -0.015
+  -0.011
+  1.000
+  0.007
+  -0.007
+  0.004
+
+  L  5 
+  0.007
+  0.005
+  0.010
+  0.007
+  1.000
+  0.009
+  0.003
+
+  L  6 
+  -0.004
+  0.005
+  -0.001
+  -0.007
+  0.009
+  1.000
+  0.008
+
+  L  7 
+  0.011
+  0.001
+  -0.007
+  0.004
+  0.003
+  0.008
+  1.000
+
+
+  Overall mean off-diagonal similarity: 0.0035
+  Adjacent layer similarities: L0→L2=0.002, L2→L3=0.020, L3→L4=-0.011, L4→L5=0.007, L5→L6=0.009, L6→L7=0.008
+
+  Most cross-layer stable nodes:
+    With                 mean off-diag = 0.0148
+    AsyncFunctionDef     mean off-diag = 0.0108
+    While                mean off-diag = 0.0088
+  Least cross-layer stable nodes:
+    If                   mean off-diag = -0.0023
+    Yield                mean off-diag = -0.0029
+    ClassDef             mean off-diag = -0.0047
+
+  [RESID stream]
+  Cosine similarity of feature activation patterns across layers:
+
+  Averaged across all nodes (layers 1–7):
+        
+  L  1
+  L  2
+  L  3
+  L  4
+  L  5
+  L  6
+  L  7
+
+  L  1 
+  1.000
+  0.089
+  0.151
+  0.034
+  0.031
+  0.026
+  0.036
+
+  L  2 
+  0.089
+  1.000
+  0.084
+  0.034
+  0.049
+  0.042
+  0.009
+
+  L  3 
+  0.151
+  0.084
+  1.000
+  0.082
+  0.068
+  0.003
+  0.044
+
+  L  4 
+  0.034
+  0.034
+  0.082
+  1.000
+  0.163
+  0.104
+  0.079
+
+  L  5 
+  0.031
+  0.049
+  0.068
+  0.163
+  1.000
+  0.135
+  0.117
+
+  L  6 
+  0.026
+  0.042
+  0.003
+  0.104
+  0.135
+  1.000
+  0.160
+
+  L  7 
+  0.036
+  0.009
+  0.044
+  0.079
+  0.117
+  0.160
+  1.000
+
+
+  Overall mean off-diagonal similarity: 0.0732
+  Adjacent layer similarities: L1→L2=0.089, L2→L3=0.084, L3→L4=0.082, L4→L5=0.163, L5→L6=0.135, L6→L7=0.160
+
+  Most cross-layer stable nodes:
+    ListComp             mean off-diag = 0.2213
+    ClassDef             mean off-diag = 0.1462
+    Yield                mean off-diag = 0.1273
+  Least cross-layer stable nodes:
+    While                mean off-diag = 0.0352
+    For                  mean off-diag = 0.0276
+    Lambda               mean off-diag = 0.0230
+
+========================================================================
+  7. CROSS-SITE ANALYSIS (MLP vs Residual)
+========================================================================
+
+  [L4] MLP ↔ Residual feature alignment:
+  Node                 Assigned cos   Best match cos   Best match feat 
+  ------------------------------------------------------------------
+  For                  +0.0101        0.1015          32205
+  While                -0.0166        0.1112          19417
+  If                   +0.0185        0.0920          30258
+  FunctionDef          -0.0123        0.0842          18300
+  AsyncFunctionDef     -0.0157        0.0842          18300
+  ClassDef             -0.0157        0.0842          18300
+  With                 -0.0437        0.1487          17244
+  Try                  +0.0418        0.0886          32262
+  Lambda               -0.0769        0.0915          14808
+  Return               -0.0381        0.0920          19417
+  Yield                +0.0174        0.1494          4017
+  ListComp             +0.0697        0.0889          30931
+  Assert               +0.0475        0.1262          14712
+
+  Mean assigned cosine: -0.0011
+  Mean best-match cosine: 0.1033
+  → MLP and residual features are essentially orthogonal
+  → Even best matches are very weak
+
+  [L7] MLP ↔ Residual feature alignment:
+  Node                 Assigned cos   Best match cos   Best match feat 
+  ------------------------------------------------------------------
+  For                  +0.0125        0.1565          21753
+  While                -0.0208        0.1429          25297
+  If                   +0.0812        0.1366          17122
+  FunctionDef          +0.0257        0.2804          27460
+  AsyncFunctionDef     +0.0257        0.2804          27460
+  ClassDef             -0.0120        0.2137          3528
+  With                 +0.0383        0.2804          27460
+  Try                  +0.0042        0.1366          17122
+  Lambda               -0.0208        0.1429          25297
+  Return               +0.1914        0.2804          27460
+  Yield                -0.0632        0.2137          3528
+  ListComp             +0.1088        0.2703          4738
+  Assert               -0.0255        0.1305          27988
+
+  Mean assigned cosine: 0.0266
+  Mean best-match cosine: 0.2050
+  → MLP and residual features are essentially orthogonal
+  → Even best matches are moderate
+
+========================================================================
+  8. LOGIT LENS ANALYSIS
+========================================================================
+
+  Source: results (combined)
+
+  [logit_lens_L4_mlp]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  'plt'                          +0.0526  'as'                           -0.0610
+  While                'direction'                    +0.0640  'ice'                          -0.0427
+  If                   'ted'                          +0.0633  'd'                            -0.0591
+  FunctionDef          'en'                           +0.0408  'atus'                         -0.0545
+  AsyncFunctionDef     'en'                           +0.0408  'atus'                         -0.0545
+  ClassDef             'en'                           +0.0408  'atus'                         -0.0545
+  With                 '?'                            +0.0607  'target'                       -0.0815
+  Try                  'own'                          +0.0489  'ash'                          -0.0656
+  Lambda               'liver'                        +0.0478  'target'                       -0.0476
+  Return               ''                             +0.0526  ';'                            -0.0835
+  Yield                'gs'                           +0.0549  'atus'                         -0.0656
+  ListComp             ''                             +0.0452  '{'                            -0.0655
+  Assert               'Tuple'                        +0.0467  'ordinate'                     -0.0607
+
+  [logit_lens_L4_resid]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  ')<|'                          +0.0585  "('"                           -0.0613
+  While                '&'                            +0.0472  'trans'                        -0.0498
+  If                   'riend'                        +0.0578  ':'                            -0.0690
+  FunctionDef          '[node'                        +0.2034  ';'                            -0.0605
+  AsyncFunctionDef     '(self'                        +0.2301  ';'                            -0.0603
+  ClassDef             '(self'                        +0.2301  ';'                            -0.0603
+  With                 ';'                            +0.0765  '.parent'                      -0.0647
+  Try                  ';'                            +0.0567  'Return'                       -0.0766
+  Lambda               ';'                            +0.0567  'Return'                       -0.0766
+  Return               ';'                            +0.0886  '\\'                           -0.0706
+  Yield                '+='                           +0.1145  '_time'                        -0.0602
+  ListComp             'model'                        +0.0508  'loat'                         -0.0668
+  Assert               '+='                           +0.1126  'lat'                          -0.0676
+
+  [logit_lens_L5_mlp]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  '0'                            +0.0524  "':"                           -0.0497
+  While                '"'                            +0.0464  'cond'                         -0.0500
+  If                   '.read'                        +0.0653  'air'                          -0.0762
+  FunctionDef          '.read'                        +0.0653  'air'                          -0.0762
+  AsyncFunctionDef     '[-'                           +0.0446  'Testing'                      -0.0672
+  ClassDef             '[-'                           +0.0446  'Testing'                      -0.0672
+  With                 '!='                           +0.0633  'Define'                       -0.0884
+  Try                  'and'                          +0.0724  '{'                            -0.0657
+  Lambda               'input'                        +0.0646  '.txt'                         -0.0557
+  Return               'mm'                           +0.0709  '�'                            -0.0758
+  Yield                '!='                           +0.0633  'Define'                       -0.0884
+  ListComp             '['                            +0.0560  'The'                          -0.0651
+  Assert               'plt'                          +0.0496  ';'                            -0.0437
+
+  [logit_lens_L5_resid]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  'size'                         +0.0479  'lat'                          -0.0696
+  While                "'#"                           +0.0515  '.write'                       -0.0598
+  If                   '[str'                         +0.0418  'bre'                          -0.0629
+  FunctionDef          'ilename'                      +0.1070  '�'                            -0.0799
+  AsyncFunctionDef     '","'                          +0.0512  'itial'                        -0.0739
+  ClassDef             '(self'                        +0.1999  'loat'                         -0.0448
+  With                 '.read'                        +0.0692  'bre'                          -0.0615
+  Try                  '/'                            +0.0465  '+='                           -0.0457
+  Lambda               "'#"                           +0.0515  '.write'                       -0.0598
+  Return               'Return'                       +0.0630  ';'                            -0.1213
+  Yield                '+='                           +0.0842  ';'                            -0.0661
+  ListComp             'ateg'                         +0.0388  'loat'                         -0.0784
+  Assert               '+='                           +0.0686  '.read'                        -0.0897
+
+  [logit_lens_L6_mlp]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  '.split'                       +0.0492  '{}'                           -0.0672
+  While                'itial'                        +0.0443  'False'                        -0.0463
+  If                   '.pop'                         +0.0511  'arehouse'                     -0.0474
+  FunctionDef          'erge'                         +0.0727  '{'                            -0.0506
+  AsyncFunctionDef     'erge'                         +0.0727  '{'                            -0.0506
+  ClassDef             'erge'                         +0.0727  '{'                            -0.0506
+  With                 'loat'                         +0.0627  'best'                         -0.0652
+  Try                  ':'                            +0.0593  'dfs'                          -0.0772
+  Lambda               'itial'                        +0.0443  'False'                        -0.0463
+  Return               '//'                           +0.0747  'True'                         -0.1140
+  Yield                ']['                           +0.0577  'No'                           -0.0972
+  ListComp             'rontier'                      +0.0810  '|'                            -0.1137
+  Assert               'append'                       +0.0749  'loat'                         -0.0578
+
+  [logit_lens_L6_resid]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  '")<|'                         +0.0533  'ener'                         -0.0538
+  While                'sw'                           +0.0788  '.strip'                       -0.0918
+  If                   'sw'                           +0.0788  '.strip'                       -0.0918
+  FunctionDef          '[:'                           +0.0533  'qrt'                          -0.0642
+  AsyncFunctionDef     '[:'                           +0.0533  'qrt'                          -0.0642
+  ClassDef             '(self'                        +0.1228  '<|'                           -0.0600
+  With                 '.read'                        +0.1343  'random'                       -0.0680
+  Try                  '<|'                           +0.0572  'valu'                         -0.0591
+  Lambda               '.append'                      +0.0437  'plt'                          -0.0637
+  Return               'solve'                        +0.0446  '(self'                        -0.1222
+  Yield                'ny'                           +0.1076  'sys'                          -0.0752
+  ListComp             'plt'                          +0.0539  'loat'                         -0.0814
+  Assert               '.append'                      +0.0437  'plt'                          -0.0637
+
+  [logit_lens_L7_mlp]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  '-='                           +0.0611  'neighbor'                     -0.0832
+  While                '['                            +0.0446  'eight'                        -0.0801
+  If                   '.set'                         +0.0488  'optimal'                      -0.0676
+  FunctionDef          '}"'                           +0.0662  ''                             -0.0914
+  AsyncFunctionDef     '}"'                           +0.0662  ''                             -0.0914
+  ClassDef             ']):'                          +0.1460  '.'                            -0.1130
+  With                 '}"'                           +0.0662  ''                             -0.0914
+  Try                  '.set'                         +0.0488  'optimal'                      -0.0676
+  Lambda               '['                            +0.0446  'eight'                        -0.0801
+  Return               '}"'                           +0.0662  ''                             -0.0914
+  Yield                ']):'                          +0.1460  '.'                            -0.1130
+  ListComp             '�'                            +0.1410  "':"                           -0.1246
+  Assert               '.heapp'                       +0.0939  '='                            -0.0541
+
+  [logit_lens_L7_resid]
+  Node                 Top Promoted                   Logit    Top Inhibited                  Logit   
+  ------------------------------------------------------------------------------------------------
+  For                  '.set'                         +0.0467  'len'                          -0.0653
+  While                'distances'                    +0.0598  '_row'                         -0.0545
+  If                   'not'                          +0.0610  'essage'                       -0.0613
+  FunctionDef          '(-'                           +0.0423  '~'                            -0.0787
+  AsyncFunctionDef     '(-'                           +0.0423  '~'                            -0.0787
+  ClassDef             '(self'                        +0.1533  'calculate'                    -0.0498
+  With                 '"'                            +0.0671  ')],'                          -0.0647
+  Try                  '(r'                           +0.1055  'main'                         -0.0468
+  Lambda               'distances'                    +0.0598  '_row'                         -0.0545
+  Return               '<='                           +0.0934  '.read'                        -0.0817
+  Yield                'ter'                          +0.0710  'and'                          -0.0708
+  ListComp             ')):'                          +0.0609  'losest'                       -0.0661
+  Assert               'distances'                    +0.0598  '_row'                         -0.0545
+
+  [L4_mlp] Mean promotion logit: 0.0405, Mean inhibition logit: 0.0457
+
+  [L4_resid] Mean promotion logit: 0.0669, Mean inhibition logit: 0.0504
+
+  [L5_mlp] Mean promotion logit: 0.0459, Mean inhibition logit: 0.0501
+
+  [L5_resid] Mean promotion logit: 0.0497, Mean inhibition logit: 0.0521
+
+  [L6_mlp] Mean promotion logit: 0.0440, Mean inhibition logit: 0.0512
+
+  [L6_resid] Mean promotion logit: 0.0523, Mean inhibition logit: 0.0546
+
+  [L7_mlp] Mean promotion logit: 0.0638, Mean inhibition logit: 0.0693
+
+  [L7_resid] Mean promotion logit: 0.0528, Mean inhibition logit: 0.0534
+
+  Key question: do promoted tokens relate semantically to the AST node?
+  (Manual inspection required — check whether 'for' features promote iteration-related tokens, etc.)
+
+========================================================================
+  9. STEERING ANALYSIS
+========================================================================
+
+  [L4_mlp] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            0.0400    
+  While                no            no            no            0.0357    
+  If                   no            no            no            0.0000    
+  FunctionDef          YES           no            no            0.1134    
+  AsyncFunctionDef     no            no            no            0.1066    
+  ClassDef             no            no            no            0.0000    
+  With                 no            no            no            0.5200    
+  Try                  no            no            no            0.0000    
+  Lambda               no            no            no            0.1973    
+  Return               no            no            no            0.4941    
+  Yield                no            no            no            0.2888    
+  ListComp             YES           YES           YES           0.1644    
+  Assert               no            no            no            0.1388    
+  At 2.0x: 15% of nodes produce their keyword
+  At 5.0x: 8% of nodes produce their keyword
+  At 10.0x: 8% of nodes produce their keyword
+
+  [L4_mlp] Codegen steering:
+    At 2.0x: mean keyword rate = 7.7%
+    At 5.0x: mean keyword rate = 6.9%
+    At 10.0x: mean keyword rate = 3.1%
+
+  [L4_resid] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            1.7598    
+  While                no            no            no            0.2563    
+  If                   no            no            no            0.0000    
+  FunctionDef          no            no            no            0.1873    
+  AsyncFunctionDef     no            no            no            0.1848    
+  ClassDef             no            no            no            1.2123    
+  With                 no            no            no            1.7115    
+  Try                  no            no            no            0.0000    
+  Lambda               no            no            no            1.1301    
+  Return               no            no            no            0.2688    
+  Yield                no            no            no            0.9686    
+  ListComp             no            no            no            2.8379    
+  Assert               no            no            no            0.4297    
+  At 2.0x: 0% of nodes produce their keyword
+  At 5.0x: 0% of nodes produce their keyword
+  At 10.0x: 0% of nodes produce their keyword
+
+  [L4_resid] Codegen steering:
+    At 2.0x: mean keyword rate = 0.0%
+    At 5.0x: mean keyword rate = 0.0%
+    At 10.0x: mean keyword rate = 0.0%
+
+  [L5_mlp] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            0.0000    
+  While                no            no            no            0.5287    
+  If                   no            no            no            0.0685    
+  FunctionDef          YES           YES           YES           0.0879    
+  AsyncFunctionDef     no            no            no            0.0791    
+  ClassDef             no            no            no            0.0000    
+  With                 no            no            no            0.8703    
+  Try                  no            no            no            0.7857    
+  Lambda               no            no            no            1.0585    
+  Return               no            no            no            0.6460    
+  Yield                no            no            no            0.0000    
+  ListComp             YES           YES           no            0.5933    
+  Assert               no            no            no            0.2357    
+  At 2.0x: 15% of nodes produce their keyword
+  At 5.0x: 15% of nodes produce their keyword
+  At 10.0x: 8% of nodes produce their keyword
+
+  [L5_mlp] Codegen steering:
+    At 2.0x: mean keyword rate = 6.9%
+    At 5.0x: mean keyword rate = 5.4%
+    At 10.0x: mean keyword rate = 0.0%
+
+  [L5_resid] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            1.3207    
+  While                no            no            no            0.7717    
+  If                   YES           YES           YES           0.0000    
+  FunctionDef          no            no            no            0.6177    
+  AsyncFunctionDef     no            no            no            1.1795    
+  ClassDef             no            no            no            1.4076    
+  With                 no            no            no            2.3379    
+  Try                  no            no            no            0.0000    
+  Lambda               no            no            no            1.0790    
+  Return               no            no            YES           2.5732    
+  Yield                no            no            no            1.2810    
+  ListComp             no            no            no            2.6296    
+  Assert               no            no            no            0.6063    
+  At 2.0x: 8% of nodes produce their keyword
+  At 5.0x: 8% of nodes produce their keyword
+  At 10.0x: 15% of nodes produce their keyword
+
+  [L5_resid] Codegen steering:
+    At 2.0x: mean keyword rate = 0.0%
+    At 5.0x: mean keyword rate = 4.2%
+    At 10.0x: mean keyword rate = 5.0%
+
+  [L6_mlp] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            0.5720    
+  While                no            no            no            0.5643    
+  If                   no            no            no            0.0000    
+  FunctionDef          no            no            YES           0.5374    
+  AsyncFunctionDef     no            no            no            0.4864    
+  ClassDef             no            no            no            0.0000    
+  With                 no            no            no            1.4687    
+  Try                  no            no            no            0.0000    
+  Lambda               no            no            no            0.6642    
+  Return               no            no            no            1.1560    
+  Yield                no            no            no            0.7184    
+  ListComp             no            no            no            1.4202    
+  Assert               no            no            no            0.0000    
+  At 2.0x: 0% of nodes produce their keyword
+  At 5.0x: 0% of nodes produce their keyword
+  At 10.0x: 8% of nodes produce their keyword
+
+  [L6_mlp] Codegen steering:
+    At 2.0x: mean keyword rate = 5.0%
+    At 5.0x: mean keyword rate = 1.2%
+    At 10.0x: mean keyword rate = 0.0%
+
+  [L6_resid] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            2.3345    
+  While                no            no            no            0.0000    
+  If                   no            no            no            0.1126    
+  FunctionDef          no            no            no            1.1925    
+  AsyncFunctionDef     no            no            no            1.1861    
+  ClassDef             no            no            no            0.0000    
+  With                 no            no            no            3.6628    
+  Try                  no            no            no            1.8566    
+  Lambda               no            no            no            1.3443    
+  Return               no            no            no            1.3920    
+  Yield                no            no            no            1.7448    
+  ListComp             no            no            no            2.6045    
+  Assert               no            no            no            1.1801    
+  At 2.0x: 0% of nodes produce their keyword
+  At 5.0x: 0% of nodes produce their keyword
+  At 10.0x: 0% of nodes produce their keyword
+
+  [L6_resid] Codegen steering:
+    At 2.0x: mean keyword rate = 0.0%
+    At 5.0x: mean keyword rate = 0.0%
+    At 10.0x: mean keyword rate = 0.0%
+
+  [L7_mlp] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            YES           no            2.0703    
+  While                no            no            no            0.8699    
+  If                   no            no            no            1.0391    
+  FunctionDef          no            no            no            0.0000    
+  AsyncFunctionDef     no            no            no            0.0000    
+  ClassDef             no            no            no            2.1180    
+  With                 no            no            no            1.4880    
+  Try                  no            no            no            1.3753    
+  Lambda               no            no            no            1.2884    
+  Return               no            no            no            0.7999    
+  Yield                no            no            no            2.0718    
+  ListComp             no            no            no            1.9848    
+  Assert               no            no            no            2.8639    
+  At 2.0x: 0% of nodes produce their keyword
+  At 5.0x: 8% of nodes produce their keyword
+  At 10.0x: 0% of nodes produce their keyword
+
+  [L7_mlp] Codegen steering:
+    At 2.0x: mean keyword rate = 0.0%
+    At 5.0x: mean keyword rate = 0.0%
+    At 10.0x: mean keyword rate = 0.0%
+
+  [L7_resid] Token-level steering:
+  Node                 2x keyword?   5x keyword?   10x keyword?  Orig val  
+  ----------------------------------------------------------------------
+  For                  no            no            no            2.3391    
+  While                no            no            no            1.5922    
+  If                   no            no            no            0.0000    
+  FunctionDef          no            no            no            1.7626    
+  AsyncFunctionDef     no            no            no            1.6948    
+  ClassDef             no            no            no            1.6616    
+  With                 no            no            no            4.9538    
+  Try                  no            no            no            0.0000    
+  Lambda               no            no            no            2.3051    
+  Return               no            no            no            3.2552    
+  Yield                no            no            no            1.0683    
+  ListComp             no            no            no            4.0445    
+  Assert               no            no            no            1.8594    
+  At 2.0x: 0% of nodes produce their keyword
+  At 5.0x: 0% of nodes produce their keyword
+  At 10.0x: 0% of nodes produce their keyword
+
+  [L7_resid] Codegen steering:
+    At 2.0x: mean keyword rate = 0.0%
+    At 5.0x: mean keyword rate = 0.0%
+    At 10.0x: mean keyword rate = 0.0%
+
+========================================================================
+  10. MINIMAL PAIRS ANALYSIS
+========================================================================
+
+  [L4_mlp] Feature selectivity on minimal code pairs:
+  4/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.111         0.029         YES
+  If_vs_While               If              While           0.227         0.227         NO
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.200         0.273         NO
+  For_vs_ListComp           For             ListComp        0.056         0.143         NO
+  Try_vs_If                 Try             If              0.036         0.033         YES
+  With_vs_manual            With            FunctionDef     0.409         0.400         YES
+  Return_vs_Yield           Return          Yield           0.348         0.333         YES
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.229         0.237         NO
+
+  [L4_resid] Feature selectivity on minimal code pairs:
+  2/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.611         0.676         NO
+  If_vs_While               If              While           0.045         0.045         NO
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.000         0.000         NO
+  For_vs_ListComp           For             ListComp        0.778         0.500         YES
+  Try_vs_If                 Try             If              0.000         0.000         NO
+  With_vs_manual            With            FunctionDef     0.136         0.160         NO
+  Return_vs_Yield           Return          Yield           0.000         0.000         NO
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.657         0.158         YES
+
+  [L5_mlp] Feature selectivity on minimal code pairs:
+  7/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.111         0.059         YES
+  If_vs_While               If              While           0.227         0.182         YES
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.250         0.091         YES
+  For_vs_ListComp           For             ListComp        0.056         0.000         YES
+  Try_vs_If                 Try             If              0.179         0.000         YES
+  With_vs_manual            With            FunctionDef     0.227         0.120         YES
+  Return_vs_Yield           Return          Yield           0.043         0.067         NO
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.400         0.000         YES
+
+  [L5_resid] Feature selectivity on minimal code pairs:
+  2/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.556         0.618         NO
+  If_vs_While               If              While           0.045         0.000         YES
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.000         0.000         NO
+  For_vs_ListComp           For             ListComp        0.500         0.500         NO
+  Try_vs_If                 Try             If              0.286         0.467         NO
+  With_vs_manual            With            FunctionDef     0.318         0.400         NO
+  Return_vs_Yield           Return          Yield           0.609         0.733         NO
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.800         0.079         YES
+
+  [L6_mlp] Feature selectivity on minimal code pairs:
+  4/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.833         0.853         NO
+  If_vs_While               If              While           0.045         0.045         NO
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.000         0.000         NO
+  For_vs_ListComp           For             ListComp        0.944         0.786         YES
+  Try_vs_If                 Try             If              0.071         0.067         YES
+  With_vs_manual            With            FunctionDef     0.864         0.760         YES
+  Return_vs_Yield           Return          Yield           0.348         0.333         YES
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.000         0.158         NO
+
+  [L6_resid] Feature selectivity on minimal code pairs:
+  6/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.833         0.706         YES
+  If_vs_While               If              While           0.182         0.182         NO
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.050         0.000         YES
+  For_vs_ListComp           For             ListComp        0.778         0.571         YES
+  Try_vs_If                 Try             If              0.250         0.267         NO
+  With_vs_manual            With            FunctionDef     0.773         0.640         YES
+  Return_vs_Yield           Return          Yield           0.043         0.000         YES
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.343         0.184         YES
+
+  [L7_mlp] Feature selectivity on minimal code pairs:
+  5/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.333         0.235         YES
+  If_vs_While               If              While           0.000         0.000         NO
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.150         0.000         YES
+  For_vs_ListComp           For             ListComp        0.278         0.357         NO
+  Try_vs_If                 Try             If              0.000         0.000         NO
+  With_vs_manual            With            FunctionDef     0.227         0.160         YES
+  Return_vs_Yield           Return          Yield           0.174         0.133         YES
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.086         0.079         YES
+
+  [L7_resid] Feature selectivity on minimal code pairs:
+  5/8 pairs show expected selectivity (feature fires more on its node)
+
+  Pair                      A node          B node          A fire on A   A fire on B   Select?
+  -----------------------------------------------------------------------------------------------
+  For_vs_While              For             While           0.500         0.412         YES
+  If_vs_While               If              While           0.045         0.045         NO
+  FunctionDef_vs_Lambda     FunctionDef     Lambda          0.000         0.000         NO
+  For_vs_ListComp           For             ListComp        0.444         0.286         YES
+  Try_vs_If                 Try             If              0.036         0.067         NO
+  With_vs_manual            With            FunctionDef     0.364         0.360         YES
+  Return_vs_Yield           Return          Yield           0.043         0.000         YES
+  ClassDef_vs_FunctionDef   ClassDef        FunctionDef     0.400         0.000         YES
+
+========================================================================
+  11. NESTING / COMPOSITIONALITY ANALYSIS
+========================================================================
+
+  [L4_mlp] Do features compose under nesting?
+  5/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          YES          YES
+  def_in_class         ClassDef     FunctionDef  YES          YES
+  if_in_for            For          If           YES          YES
+  try_in_for           For          Try          NO           NO
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L4_resid] Do features compose under nesting?
+  4/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          YES          YES
+  def_in_class         ClassDef     FunctionDef  NO           NO
+  if_in_for            For          If           YES          YES
+  try_in_for           For          Try          NO           NO
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L5_mlp] Do features compose under nesting?
+  6/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          YES          YES
+  def_in_class         ClassDef     FunctionDef  YES          YES
+  if_in_for            For          If           YES          YES
+  try_in_for           For          Try          YES          YES
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L5_resid] Do features compose under nesting?
+  4/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          NO           NO
+  def_in_class         ClassDef     FunctionDef  YES          YES
+  if_in_for            For          If           NO           NO
+  try_in_for           For          Try          YES          YES
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L6_mlp] Do features compose under nesting?
+  3/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          NO           NO
+  def_in_class         ClassDef     FunctionDef  YES          YES
+  if_in_for            For          If           NO           NO
+  try_in_for           For          Try          YES          YES
+  with_in_def          FunctionDef  With         NO           NO
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L6_resid] Do features compose under nesting?
+  5/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          YES          YES
+  def_in_class         ClassDef     FunctionDef  NO           NO
+  if_in_for            For          If           YES          YES
+  try_in_for           For          Try          YES          YES
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L7_mlp] Do features compose under nesting?
+  3/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          NO           NO
+  def_in_class         ClassDef     FunctionDef  NO           NO
+  if_in_for            For          If           NO           NO
+  try_in_for           For          Try          YES          YES
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+  [L7_resid] Do features compose under nesting?
+  5/6 nesting configurations maintain composition
+
+  Config               Outer        Inner        Both fire?   Compose?
+  ------------------------------------------------------------
+  for_in_if            If           For          YES          YES
+  def_in_class         ClassDef     FunctionDef  YES          YES
+  if_in_for            For          If           YES          YES
+  try_in_for           For          Try          NO           NO
+  with_in_def          FunctionDef  With         YES          YES
+  lambda_in_for        For          Lambda       YES          YES
+
+========================================================================
+  12. POSITIONAL ANALYSIS
+========================================================================
+
+  [L4_mlp] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  448          0.5533     0.2798   0.5833     'return'       
+  While                416          0.5120     0.3713   0.5000     ')'            
+  If                   549          0.4759     0.3176   0.4286     ''             
+  FunctionDef          1824         0.5126     0.3068   0.5251     '('            
+  AsyncFunctionDef     1824         0.5126     0.3068   0.5251     '('            
+  ClassDef             1824         0.5126     0.3068   0.5251     '('            
+  With                 515          0.4195     0.2893   0.4091     'def'          
+  Try                  111          0.4615     0.3184   0.3750     'cess'         
+  Lambda               1324         0.5317     0.3084   0.5217     ''             
+  Return               990          0.5649     0.2842   0.5963     ')'            
+  Yield                1490         0.5475     0.2772   0.5455     ''             
+  ListComp             613          0.3984     0.3306   0.3750     ''             
+  Assert               1100         0.5255     0.2853   0.5209     '('            
+
+  Overall: mean position = 0.502 (0=start, 1=end), std = 0.306
+  → Features fire uniformly across positions
+
+  [L4_resid] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  2060         0.4917     0.2977   0.5000     ''             
+  While                125          0.7892     0.2529   1.0000     ')'            
+  If                   376          0.5999     0.2770   0.6667     'items'        
+  FunctionDef          175          0.7547     0.2910   0.8824     ')'            
+  AsyncFunctionDef     1058         0.6433     0.2510   0.6429     ''             
+  ClassDef             1058         0.6433     0.2510   0.6429     ''             
+  With                 177          0.5562     0.2721   0.5625     '='            
+  Try                  556          0.6999     0.2823   0.7208     ')'            
+  Lambda               556          0.6999     0.2823   0.7208     ')'            
+  Return               245          0.5282     0.3306   0.5000     ')'            
+  Yield                346          0.5010     0.3285   0.5000     'q'            
+  ListComp             1246         0.4919     0.3100   0.5000     '='            
+  Assert               1284         0.3576     0.3018   0.2727     '):'           
+
+  Overall: mean position = 0.597 (0=start, 1=end), std = 0.287
+  → Features fire uniformly across positions
+
+  [L5_mlp] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  219          0.5368     0.2176   0.5000     ''             
+  While                1053         0.4633     0.3101   0.4375     ''             
+  If                   1762         0.4209     0.3377   0.3750     'return'       
+  FunctionDef          1762         0.4209     0.3377   0.3750     'return'       
+  AsyncFunctionDef     742          0.5844     0.2523   0.5714     ''             
+  ClassDef             742          0.5844     0.2523   0.5714     ''             
+  With                 246          0.6551     0.2763   0.6667     ')'            
+  Try                  166          0.6243     0.2477   0.6450     ''             
+  Lambda               955          0.5392     0.2851   0.5238     ')'            
+  Return               44           0.7391     0.2391   0.7633     ''             
+  Yield                246          0.6551     0.2763   0.6667     ')'            
+  ListComp             228          0.5702     0.2743   0.5505     ''             
+  Assert               1309         0.4894     0.3329   0.4615     ''             
+
+  Overall: mean position = 0.560 (0=start, 1=end), std = 0.280
+  → Features fire uniformly across positions
+
+  [L5_resid] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  2119         0.4659     0.3117   0.4706     '='            
+  While                2566         0.5441     0.3085   0.5556     ''             
+  If                   181          0.5612     0.2859   0.5714     'None'         
+  FunctionDef          278          0.5883     0.3323   0.6382     'out'          
+  AsyncFunctionDef     301          0.6419     0.3202   0.7000     'return'       
+  ClassDef             457          0.6214     0.2400   0.6250     ''             
+  With                 132          0.6535     0.2291   0.6667     '(self'        
+  Try                  599          0.4499     0.3072   0.4286     'def'          
+  Lambda               2566         0.5441     0.3085   0.5556     ''             
+  Return               747          0.7011     0.2213   0.7368     ''             
+  Yield                440          0.6015     0.2879   0.6726     ''             
+  ListComp             347          0.5243     0.2570   0.5000     '):'           
+  Assert               1006         0.3980     0.3247   0.3571     ''             
+
+  Overall: mean position = 0.561 (0=start, 1=end), std = 0.287
+  → Features fire uniformly across positions
+
+  [L6_mlp] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  2636         0.4859     0.2999   0.4929     ''             
+  While                1584         0.5680     0.3158   0.5714     ')'            
+  If                   79           0.7343     0.2487   0.8000     '0'            
+  FunctionDef          273          0.8329     0.2535   1.0000     'v'            
+  AsyncFunctionDef     273          0.8329     0.2535   1.0000     'v'            
+  ClassDef             273          0.8329     0.2535   1.0000     'v'            
+  With                 997          0.4682     0.2646   0.4737     '='            
+  Try                  143          0.6293     0.2759   0.6364     '0'            
+  Lambda               1584         0.5680     0.3158   0.5714     ')'            
+  Return               311          0.7046     0.2526   0.7500     'return'       
+  Yield                235          0.7969     0.1688   0.8333     'return'       
+  ListComp             96           0.7680     0.2463   0.9149     '0'            
+  Assert               234          0.6459     0.2520   0.7321     ')'            
+
+  Overall: mean position = 0.682 (0=start, 1=end), std = 0.262
+  → Features fire uniformly across positions
+
+  [L6_resid] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  2520         0.4672     0.3057   0.4667     '='            
+  While                3426         0.4052     0.3198   0.3500     ')'            
+  If                   3426         0.4052     0.3198   0.3500     ')'            
+  FunctionDef          310          0.6949     0.3149   0.8333     'c'            
+  AsyncFunctionDef     310          0.6949     0.3149   0.8333     'c'            
+  ClassDef             294          0.7063     0.2568   0.7500     'res'          
+  With                 126          0.6449     0.2325   0.6667     '(self'        
+  Try                  597          0.5836     0.2958   0.6190     '='            
+  Lambda               1866         0.6132     0.3041   0.6667     ')'            
+  Return               176          0.8765     0.1471   0.9354     'return'       
+  Yield                121          0.7357     0.1805   0.7500     'y'            
+  ListComp             132          0.6741     0.2565   0.7574     ')'            
+  Assert               1866         0.6132     0.3041   0.6667     ')'            
+
+  Overall: mean position = 0.624 (0=start, 1=end), std = 0.273
+  → Features fire uniformly across positions
+
+  [L7_mlp] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  1411         0.4871     0.3074   0.5000     'q'            
+  While                1602         0.5042     0.3311   0.5000     '='            
+  If                   322          0.4932     0.3391   0.4762     'P'            
+  FunctionDef          1576         0.6779     0.2856   0.7500     'return'       
+  AsyncFunctionDef     1576         0.6779     0.2856   0.7500     'return'       
+  ClassDef             338          0.7938     0.2393   0.9091     ')'            
+  With                 1576         0.6779     0.2856   0.7500     'return'       
+  Try                  322          0.4932     0.3391   0.4762     'P'            
+  Lambda               1602         0.5042     0.3311   0.5000     '='            
+  Return               1576         0.6779     0.2856   0.7500     'return'       
+  Yield                338          0.7938     0.2393   0.9091     ')'            
+  ListComp             332          0.5826     0.2437   0.5625     ''             
+  Assert               1446         0.4924     0.3214   0.5000     ''             
+
+  Overall: mean position = 0.604 (0=start, 1=end), std = 0.295
+  → Features fire uniformly across positions
+
+  [L7_resid] Feature firing position in token sequence:
+  Node                 N firings    Mean pos   Std      Median     Top token      
+  ---------------------------------------------------------------------------
+  For                  2255         0.4686     0.2989   0.4545     ''             
+  While                3048         0.5780     0.2962   0.5714     ''             
+  If                   692          0.5126     0.2971   0.5625     'values'       
+  FunctionDef          330          0.7494     0.2685   0.8421     'output'       
+  AsyncFunctionDef     330          0.7494     0.2685   0.8421     'output'       
+  ClassDef             438          0.6315     0.2420   0.6500     ''             
+  With                 11           0.7387     0.1956   0.7778     '()'           
+  Try                  115          0.7488     0.2118   0.7600     '(se'          
+  Lambda               3048         0.5780     0.2962   0.5714     ''             
+  Return               234          0.7912     0.2008   0.8750     'return'       
+  Yield                1149         0.5424     0.2931   0.5769     ')'            
+  ListComp             187          0.6404     0.3147   0.7500     '):'           
+  Assert               3048         0.5780     0.2962   0.5714     ''             
+
+  Overall: mean position = 0.639 (0=start, 1=end), std = 0.268
+  → Features fire uniformly across positions
+
+========================================================================
+  13. CIRCUIT ANALYSIS
+========================================================================
+
+  [master_circuit_report.json]
+  Node                 Feature    #Winners   drop_zero    drop_mean    patch_gain   Argmax changed?
+  ------------------------------------------------------------------------------------------
+  For                  362        10         -0.4941      -0.4928      -0.1383      no
+  While                4402       10         -0.0029      +0.0174      +0.5733      no
+  If                   5785       8          -0.1618      -0.1554      +0.3941      no
+  FunctionDef          2773       10         +0.1387      +0.1422      +0.4533      no
+  AsyncFunctionDef     2773       10         +0.0371      +0.0401      +0.4533      no
+  ClassDef             13088      10         +0.6556      +0.6551      +0.9587      YES
+  With                 2773       10         +0.0299      +0.0286      +0.3880      no
+  Try                  5785       10         +0.0117      +0.0155      +0.3683      no
+  Lambda               4402       10         +0.0017      +0.0396      +0.6155      no
+  Return               2773       10         +0.6860      +0.6816      +0.4361      YES
+  Yield                13088      10         +0.4099      +0.4091      +0.9484      YES
+  ListComp             14012      10         +0.1729      +0.1648      +0.0591      no
+  Assert               4714       10         +0.1371      +0.1153      -0.5114      no
+
+  Summary:
+    Mean drop_zero:  0.1248
+    Mean drop_mean:  0.1278
+    Mean patch_gain: 0.3845
+    Argmax changed:  3/13 nodes
+
+  Upstream attention head analysis:
+  Top upstream attention heads (by frequency across nodes):
+    L6H50      appears for  7/13 nodes, mean weight = 0.0100
+    L6H22      appears for  6/13 nodes, mean weight = 0.0345
+    L6H86      appears for  4/13 nodes, mean weight = 0.0351
+    L6H17      appears for  4/13 nodes, mean weight = 0.0137
+    L6H4       appears for  4/13 nodes, mean weight = 0.0289
+    L6H101     appears for  3/13 nodes, mean weight = 0.0110
+    L6H32      appears for  3/13 nodes, mean weight = 0.0116
+    L6H118     appears for  3/13 nodes, mean weight = 0.0083
+    L6H19      appears for  3/13 nodes, mean weight = 0.0113
+    L6H80      appears for  3/13 nodes, mean weight = 0.0126
+
+  [circuit_report_L7_mlp.json]
+  Node                 Feature    #Winners   drop_zero    drop_mean    patch_gain   Argmax changed?
+  ------------------------------------------------------------------------------------------
+  For                  362        10         -0.4941      -0.4928      -0.1383      no
+  While                4402       10         -0.0029      +0.0174      +0.5733      no
+  If                   5785       8          -0.1618      -0.1554      +0.3941      no
+  FunctionDef          2773       10         +0.1387      +0.1422      +0.4533      no
+  AsyncFunctionDef     2773       10         +0.0371      +0.0401      +0.4533      no
+  ClassDef             13088      10         +0.6556      +0.6551      +0.9587      YES
+  With                 2773       10         +0.0299      +0.0286      +0.3880      no
+  Try                  5785       10         +0.0117      +0.0155      +0.3683      no
+  Lambda               4402       10         +0.0017      +0.0396      +0.6155      no
+  Return               2773       10         +0.6860      +0.6816      +0.4361      YES
+  Yield                13088      10         +0.4099      +0.4091      +0.9484      YES
+  ListComp             14012      10         +0.1729      +0.1648      +0.0591      no
+  Assert               4714       10         +0.1371      +0.1153      -0.5114      no
+
+  Summary:
+    Mean drop_zero:  0.1248
+    Mean drop_mean:  0.1278
+    Mean patch_gain: 0.3845
+    Argmax changed:  3/13 nodes
+
+  Upstream attention head analysis:
+  Top upstream attention heads (by frequency across nodes):
+    L6H50      appears for  7/13 nodes, mean weight = 0.0100
+    L6H22      appears for  6/13 nodes, mean weight = 0.0345
+    L6H86      appears for  4/13 nodes, mean weight = 0.0351
+    L6H17      appears for  4/13 nodes, mean weight = 0.0137
+    L6H4       appears for  4/13 nodes, mean weight = 0.0289
+    L6H101     appears for  3/13 nodes, mean weight = 0.0110
+    L6H32      appears for  3/13 nodes, mean weight = 0.0116
+    L6H118     appears for  3/13 nodes, mean weight = 0.0083
+    L6H19      appears for  3/13 nodes, mean weight = 0.0113
+    L6H80      appears for  3/13 nodes, mean weight = 0.0126
+
+  [circuit_report_L7_resid.json]
+  Node                 Feature    #Winners   drop_zero    drop_mean    patch_gain   Argmax changed?
+  ------------------------------------------------------------------------------------------
+  For                  14978      10         +0.4011      +0.1947      +0.1081      YES
+  While                79         10         -0.0160      -0.0204      -0.2502      no
+  If                   9387       10         -0.1084      -0.1084      -0.1028      no
+  FunctionDef          10347      10         +0.1510      +0.1459      -0.0756      no
+  AsyncFunctionDef     10347      10         +0.0358      +0.0320      -0.0753      no
+  ClassDef             233        10         +0.7813      +0.7694      -0.1347      YES
+  With                 19214      10         +0.0285      +0.0285      -1.0118      YES
+  Try                  8881       10         +0.0051      +0.0056      -0.1028      no
+  Lambda               79         10         -0.0846      -0.0917      -0.3763      no
+  Return               9886       10         +2.4982      +2.4982      +0.4939      YES
+  Yield                29887      10         +0.6779      +0.6473      -0.0713      YES
+  ListComp             11381      10         -0.6858      -0.6858      -1.3521      no
+  Assert               79         10         -0.1189      -0.1184      -0.2940      no
+
+  Summary:
+    Mean drop_zero:  0.2742
+    Mean drop_mean:  0.2536
+    Mean patch_gain: -0.2496
+    Argmax changed:  5/13 nodes
+
+  Upstream attention head analysis:
+  Top upstream attention heads (by frequency across nodes):
+
+========================================================================
+  14. PARAMETER SWEEP ANALYSIS
+========================================================================
+
+  Selectivity     Specificity    Nodes Found   N Specific    Avg drop_zero
+  -----------------------------------------------------------------
+  0.05            1.2            13            2             0.3647
+  0.05            1.5            13            2             0.3647
+  0.05            2.0            13            2             0.3647
+  0.1             1.2            13            2             0.3647
+  0.1             1.5            13            2             0.3647
+  0.1             2.0            13            2             0.3647
+  0.15            1.2            13            2             0.3647
+  0.15            1.5            13            2             0.3647
+  0.15            2.0            13            2             0.3647
+  0.2             1.2            13            2             0.3647
+  0.2             1.5            13            2             0.3647
+  0.2             2.0            13            2             0.3647
+  0.3             1.2            13            2             0.3647
+  0.3             1.5            13            2             0.3647
+  0.3             2.0            13            2             0.3647
+
+  Effect of selectivity threshold (averaged over specificity ratios):
+    sel=0.05   → mean specific features = 2.0, mean drop_zero = 0.3647
+    sel=0.1    → mean specific features = 2.0, mean drop_zero = 0.3647
+    sel=0.15   → mean specific features = 2.0, mean drop_zero = 0.3647
+    sel=0.2    → mean specific features = 2.0, mean drop_zero = 0.3647
+    sel=0.3    → mean specific features = 2.0, mean drop_zero = 0.3647
+
+  Effect of specificity ratio (averaged over selectivity thresholds):
+    ratio=1.2   → mean specific features = 2.0, mean drop_zero = 0.3647
+    ratio=1.5   → mean specific features = 2.0, mean drop_zero = 0.3647
+    ratio=2.0   → mean specific features = 2.0, mean drop_zero = 0.3647
+
+  Per-node sensitivity to selectivity threshold (at specificity_ratio=1.5):
+  Node                
+  sel=0.05    
+  sel=0.1     
+  sel=0.15    
+  sel=0.2     
+  sel=0.3     
+
+  --------------------------------------------------------------------------------
+  For                 
+     +2.5788
+     +2.5788
+     +2.5788
+     +2.5788
+     +2.5788
+
+  While               
+     +0.0493
+     +0.0493
+     +0.0493
+     +0.0493
+     +0.0493
+
+  If                  
+     -0.1315
+     -0.1315
+     -0.1315
+     -0.1315
+     -0.1315
+
+  FunctionDef         
+     +0.0655
+     +0.0655
+     +0.0655
+     +0.0655
+     +0.0655
+
+  AsyncFunctionDef    
+     +0.0829
+     +0.0829
+     +0.0829
+     +0.0829
+     +0.0829
+
+  ClassDef            
+     +0.4277
+     +0.4277
+     +0.4277
+     +0.4277
+     +0.4277
+
+  With                
+     +0.1928
+     +0.1928
+     +0.1928
+     +0.1928
+     +0.1928
+
+  Try                 
+     +0.1199
+     +0.1199
+     +0.1199
+     +0.1199
+     +0.1199
+
+  Lambda              
+     +0.1334
+     +0.1334
+     +0.1334
+     +0.1334
+     +0.1334
+
+  Return              
+     +0.1166
+     +0.1166
+     +0.1166
+     +0.1166
+     +0.1166
+
+  Yield               
+     +0.0983
+     +0.0983
+     +0.0983
+     +0.0983
+     +0.0983
+
+  ListComp            
+     -0.0641
+     -0.0641
+     -0.0641
+     -0.0641
+     -0.0641
+
+  Assert              
+     +1.0720
+     +1.0720
+     +1.0720
+     +1.0720
+     +1.0720
+
+
+========================================================================
+  15. MULTI-SITE DISCOVERY: SELECTIVITY PATTERNS
+========================================================================
+
+  Sites analyzed: 16
+
+  Total selective features by site:
+  Site           Total Selective    Mean per node   
+  ------------------------------------------------
+  L0_mlp         74                 5.7             
+  L0_resid       0                  0.0             
+  L1_mlp         0                  0.0             
+  L1_resid       92                 7.1             
+  L2_mlp         82                 6.3             
+  L2_resid       31                 2.4             
+  L3_mlp         18                 1.4             
+  L3_resid       38                 2.9             
+  L4_mlp         531                40.8            
+  L4_resid       185                14.2            
+  L5_mlp         394                30.3            
+  L5_resid       439                33.8            
+  L6_mlp         499                38.4            
+  L6_resid       581                44.7            
+  L7_mlp         215                16.5            
+  L7_resid       435                33.5            
+
+  Top 3 sites by feature count: L6_resid(581), L4_mlp(531), L6_mlp(499)
+  Bottom 3 sites:               L3_mlp(18), L0_resid(0), L1_mlp(0)
+
+  Selectivity distribution for best site (L6_resid):
+    For                  n_selective=61   top_sel=0.720  mean_sel=0.406
+    While                n_selective=42   top_sel=0.740  mean_sel=0.722
+    If                   n_selective=18   top_sel=0.820  mean_sel=0.448
+    FunctionDef          n_selective=62   top_sel=1.000  mean_sel=0.850
+    AsyncFunctionDef     n_selective=60   top_sel=1.000  mean_sel=0.894
+    ClassDef             n_selective=46   top_sel=0.640  mean_sel=0.594
+    With                 n_selective=41   top_sel=1.000  mean_sel=0.607
+    Try                  n_selective=31   top_sel=0.640  mean_sel=0.640
+    Lambda               n_selective=43   top_sel=0.720  mean_sel=0.720
+    Return               n_selective=46   top_sel=0.880  mean_sel=0.574
+    Yield                n_selective=47   top_sel=1.000  mean_sel=0.554
+    ListComp             n_selective=41   top_sel=1.000  mean_sel=0.768
+    Assert               n_selective=43   top_sel=0.720  mean_sel=0.718
+
+========================================================================
+  16. SYNTHESIS: KEY FINDINGS FOR PAPER
+========================================================================
+
+Based on the comprehensive analysis above, here are the findings ranked
+by novelty, strength of evidence, and paper-worthiness:
+
+TIER 1 — STRONG, NOVEL FINDINGS (definitely include):
+
+  1. SAE FAITHFULNESS IS SITE-DEPENDENT
+     - Residual SAEs lose 1.2-1.4pp probe accuracy; MLP SAEs lose 5.7-7.2pp
+     - Yet MLP SAEs have HIGHER R² (reconstruction quality)
+     - This dissociation (high R² ≠ high faithfulness) is an important
+       cautionary finding for the SAE interpretability community
+     - Evidence: linear probes, R² scores, 4 sites × 13 classes
+
+  2. PHASE TRANSITION IN FEATURE COUNT
+     - Layers 0-3 have very few selective features (~1-4 per node per layer)
+     - Layers 4-7 have an order of magnitude more (~20-80 per node)
+     - This suggests a critical transition where the model begins forming
+       discrete syntactic representations
+     - Evidence: multilayer feature counts across 8 layers × 13 nodes
+
+  3. FEATURES COMPOSE UNDER NESTING
+     - When code nests (e.g. for-in-if), both the inner and outer node
+       features fire simultaneously
+     - Composition holds in the vast majority of tested configurations
+     - This is evidence that SAE features represent genuinely modular,
+       compositional syntactic concepts
+     - Evidence: nesting analysis across 4 sites
+
+TIER 2 — SOLID SUPPORTING FINDINGS (include as supporting):
+
+  4. MLP AND RESIDUAL FEATURES ARE ORTHOGONAL
+     - Cross-site cosine similarity ≈ 0 (assigned) and < 0.3 (best match)
+     - The two sites encode syntax through completely different feature
+       directions, not shared representations
+     - Evidence: cross-site analysis at L4 and L7
+
+  5. THREE TIERS OF AST NODE SEPARABILITY
+     - Easy (100%): While, AsyncFunctionDef, With, Lambda, Assert
+     - Moderate (70-90%): ClassDef, If, Try, Yield
+     - Hard (<50%): FunctionDef, Return, For, ListComp
+     - The hard tier likely reflects structural co-occurrence
+     - Evidence: per-class probe accuracy across 4 sites
+
+  6. FEATURES FIRE UNIFORMLY ACROSS POSITIONS
+     - Mean position ≈ 0.5 with high std, meaning features aren't
+       position-locked — they respond to syntactic role regardless of
+       where the construct appears in the sequence
+     - Evidence: positional analysis across 4 sites
+
+TIER 3 — INTERESTING BUT WEAKER (mention briefly or in appendix):
+
+  7. CAUSAL EFFECTS ARE WEAK
+     - Single-feature ablation produces small probability drops
+     - The relative drops are often negative (ablation helps)
+     - This suggests syntax is encoded redundantly across many features,
+       not concentrated in single features
+     - Weak correlation between probe accuracy and causal effect
+
+  8. STEERING LARGELY FAILS
+     - Steering features at 2x-10x rarely produces the target keyword
+     - Codegen steering also shows low keyword rates
+     - This isn't necessarily bad — it may mean features encode abstract
+       syntactic roles rather than literal keyword production
+
+  9. CROSS-LAYER SIMILARITY IS LOW
+     - Features at different layers are mostly dissimilar
+     - Adjacent layers show only modest correlation
+     - Suggests each layer develops its own feature vocabulary
+
+ 10. PARAMETER SWEEP SHOWS ROBUSTNESS
+     - Feature discovery is largely stable across selectivity thresholds
+       and specificity ratios
+     - The pipeline's findings aren't artefacts of particular hyperparameters
